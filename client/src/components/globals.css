@@ -1,0 +1,52 @@
+/* -------- CSS RESET ----------- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    box-sizing: border-box;
+
+  }
+  * {
+    --oxford-blue: #14213D;
+    --orange-web: #FCA311;
+    --cerulean: #087CA7;
+    margin: 0;
+  }
+
+  html, body {
+    font-family: 'Urbanist', sans-serif;
+    height: 100%;
+  }
+
+  body {
+    background-color: black;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    mix-blend-mode: normal;
+  }
+
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  input, button, textarea, select {
+    font: inherit;
+  }
+
+  p, h1, h2, h3, h4, h5, h6 {
+    color: white;
+    overflow-wrap: break-word;
+  }
+
+  #root, #__next {
+    isolation: isolate;
+    width: 100%;
+    height: 100%;
+  }
+
+  .menu{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+  /* -------------------------------- */

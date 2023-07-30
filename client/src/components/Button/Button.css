@@ -1,0 +1,25 @@
+.btnMenu{
+    width: auto;
+    height: 100%;
+    color: var(--orange-web);
+    font-size: 72px;
+    font-style: normal;
+    font-weight: 400;
+    padding-right: 2rem;
+    text-align: end;
+    box-shadow: inset 2rem 0 0 0 var(--orange-web);
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--orange-web);
+    transition: color .25s ease,
+                box-shadow 1s ease;
+}
+
+.btnMenu:hover{
+    color: white;
+    box-shadow: inset 100vw 0 0 0 var(--orange-web);
+}
+
+.btnMenu:last-child{
+    border-bottom: none;
+}
