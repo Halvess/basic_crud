@@ -2,8 +2,7 @@
     width: auto;
     height: 100%;
     color: var(--orange-web);
-    font-size: 72px;
-    font-style: normal;
+    font-size: 4rem;
     font-weight: 400;
     padding-right: 2rem;
     text-align: end;
@@ -18,6 +17,11 @@
 .btnMenu:hover{
     color: white;
     box-shadow: inset 100vw 0 0 0 var(--orange-web);
+}
+
+.menuClicked{
+    box-shadow: inset 100vw 0 0 0 var(--orange-web);
+    color: white;
 }
 
 .btnMenu:last-child{
