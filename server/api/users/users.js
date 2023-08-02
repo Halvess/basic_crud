@@ -14,9 +14,37 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/search', async (req, res) => {
-    let values = [req.body.name]
-    let data =  await db.query("SELECT name FROM users WHERE name LIKE '%' || $1 || '%' ", values);
-    res.status(200).send({...data.rows})
+    let {name, age, country_code} = req.body;
+    let searchCount = 0
+    let nameLike = ''
+    let ageLike = ''
+    let countryLike = ''
+    let values = []
+
+    if (name){
+        searchCount += 1
+        nameLike = `name LIKE '%' || $${searchCount} || '%'`
+        values.push(name)
+    }
+    if (age){
+        searchCount += 1
+        ageLike = name ? ' AND ' + `age = $${searchCount}` : `age = $${searchCount}`
+        values.push(age)
+    }
+    if (country_code){
+        searchCount += 1
+        countryLike = name || age ? ' AND ' + `country_code = $${searchCount}` : `country_code = $${searchCount}` 
+        values.push(country_code)
+    }
+
+    let query = `${baseQuery} WHERE ${nameLike}${ageLike}${countryLike}`
+    try{
+        let data =  await db.query(query, values);
+        res.status(200).send({...data.rows})
+    }
+    catch(err){
+        res.status(500).send({message: 'Internal server error.'})
+    }
 })
 
 module.exports = router  
