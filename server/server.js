@@ -2,9 +2,15 @@ const express = require('express');
 const apiRouter = require('./api/api');
 const dotenv = require('dotenv');
 const logDate = require('./utils/logDate')
+const cors = require('cors');
 dotenv.config();
 
+
+
 const server = express()
+server.use(cors({
+    origin: '*'
+}))
 server.use(express.json())
 const getDurationInMilliseconds = (start) => {
     const NS_PER_SEC = 1e9

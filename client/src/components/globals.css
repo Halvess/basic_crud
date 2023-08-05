@@ -67,7 +67,11 @@
 .menuCreate{
   width: 100%;
   height: 100%;
-  margin: 3rem 2rem;
+}
+
+.pagePadding{
+  padding-right: 2rem;
+  padding-left: 2rem;
 }
 
 .load{

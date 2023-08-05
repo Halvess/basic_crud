@@ -1,0 +1,16 @@
+table{
+    width: 100%;
+}
+thead{
+    background: var(--oxford-blue);
+    color: white;
+}
+
+tbody{
+    text-align: center;
+    color: white;
+}
+
+.tableName, .tableCountry{
+    text-transform: capitalize;
+}

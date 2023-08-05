@@ -2,18 +2,17 @@ const express = require('express');
 const router = express.Router();
 const db = require('../../db/db')
 
-let searchBaseQuery = 'SELECT name, age, country_code FROM users'
+let searchBaseQuery = 'SELECT id, name, age, country_code as country FROM users'
+
 router.get('/', async (req, res) => {
-    let users = await db.query(searchBaseQuery);
-    if (users.rows.length){
-        return res.status(200).send({...users.rows})
+    if (!req.query.name && !req.query.age && !req.query['country_code']){
+        let users = await db.query(searchBaseQuery);
+        if (users.rowCount){
+            return res.status(200).send({...users.rows})
+        }
+            return res.status(200).send({message: 'No users found'})
     }
-        return res.status(200).send({message: 'No users found'})
-
-})
-
-router.post('/search', async (req, res) => {
-    let {name, age, country_code} = req.body;
+    let {name, age, country_code} = req.query;
     let searchCount = 0
     let nameLike = ''
     let ageLike = ''
@@ -44,9 +43,10 @@ router.post('/search', async (req, res) => {
     catch(err){
         res.status(500).send({message: 'Internal server error.'})
     }
+
 })
 
-router.post('/add', async (req,res) => {
+router.put('/', async (req,res) => {
     const {name, age, country_code} = req.body;
     if (!name || !age || !country_code){
         return res.status(400).send({message: 'All fields must be specified'})
@@ -63,7 +63,7 @@ router.post('/add', async (req,res) => {
     }
 })
 
-router.post('/delete', async (req,res) => {
+router.delete('/', async (req,res) => {
     let idValues = [...req.body.id]
     let deleteQuery = 'DELETE FROM users WHERE id IN '
     idValues.forEach((id, index) => {
@@ -88,7 +88,7 @@ router.post('/delete', async (req,res) => {
     }
 })
 
-router.post('/update', async (req,res) => {
+router.patch('/', async (req,res) => {
     const {id, name, age, country_code} = req.body
     if (!id){
         return res.status(400).send({message: 'id must be specified'})
@@ -121,11 +121,11 @@ router.post('/update', async (req,res) => {
     updateQuery += `, last_modify = to_timestamp($${valuesCounter})`
     values.push((Date.now() / 1000.0))
     valuesCounter += 1
-    updateQuery += ` WHERE id=$${valuesCounter} RETURNING *`
+    updateQuery += ` WHERE id=$${valuesCounter}`
     values.push(id)
     try{
         let data = db.query(updateQuery, values)
-        res.status(200).send({...data.rows})
+        res.status(200).send({message: 'Row successfuly modified'})
     }
     catch(err){
         res.status(500).send({message:'Internal server error'})
