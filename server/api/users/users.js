@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../../db/db')
 
-let searchBaseQuery = 'SELECT id, name, age, country_code as country FROM users'
+let searchBaseQuery = 'SELECT id, name, age, numcode FROM users'
 
 router.get('/', async (req, res) => {
     if (!req.query.name && !req.query.age && !req.query['country_code']){
@@ -47,12 +47,12 @@ router.get('/', async (req, res) => {
 })
 
 router.put('/', async (req,res) => {
-    const {name, age, country_code} = req.body;
-    if (!name || !age || !country_code){
+    const {name, age, numcode} = req.body;
+    if (!name || !age || !numcode){
         return res.status(400).send({message: 'All fields must be specified'})
     }
-    let insertQuery = 'INSERT INTO users (name, age, country_code) VALUES ($1,$2,$3) RETURNING *'
-    const values = [name, age, country_code];
+    let insertQuery = 'INSERT INTO users (name, age, numcode) VALUES ($1,$2,$3) RETURNING *'
+    const values = [name, age, numcode];
     try{
         let data =  await db.query(insertQuery, values);
         res.status(200).send({...data.rows})

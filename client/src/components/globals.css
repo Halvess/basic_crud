@@ -1,7 +1,6 @@
 /* -------- CSS RESET ----------- */
 *, *::before, *::after {
     box-sizing: border-box;
-    box-sizing: border-box;
   }
   * {
     --oxford-blue: #14213D;
@@ -84,4 +83,12 @@
 @keyframes load{
   0% {opacity: 0;}
   100% {opacity: 1;}
+}
+
+.debug{
+  color:white;
+  font-size: 8pt;
+  max-height: 300px;
+  width: 100%;
+  margin: 3rem;
 }

@@ -1,0 +1,26 @@
+.selectCountries{
+    color: white;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: none;
+    border-bottom: 1px white solid;
+    vertical-align: bottom;
+}
+
+li{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    color: white;
+}
+li::after{
+    content: 'V';
+    text-align: right;
+}
+
+.countryDiv{
+    width: 100%;
+}

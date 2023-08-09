@@ -7,10 +7,26 @@ thead{
 }
 
 tbody{
-    text-align: center;
+    text-align: left;
     color: white;
 }
 
+td{
+    padding-left: .5rem;
+    padding-right: .5rem;
+}
+
 .tableName, .tableCountry{
-    text-transform: capitalize;
+    text-transform: capitalize !important;
+}
+
+.tableName{
+    width: 50%;
+}
+.tableAge{
+    text-align: center;
+    width: 5%;
+}
+.tableCountry{
+    width: 40%;
 }
