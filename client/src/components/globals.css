@@ -7,7 +7,6 @@
     --orange-web: #FCA311;
     --cerulean: #087CA7;
       margin: 0;
-      overflow: hidden;
   }
 
   html, body {
@@ -20,6 +19,7 @@
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     mix-blend-mode: normal;
+    overflow: hidden;
   }
 
   img, picture, video, canvas, svg {
@@ -83,6 +83,10 @@
 @keyframes load{
   0% {opacity: 0;}
   100% {opacity: 1;}
+}
+
+.baseMarginTop{
+  margin-top: 1rem;
 }
 
 .debug{

@@ -11,22 +11,29 @@ tbody{
     color: white;
 }
 
+.pageSelector{
+    width: 100%;
+    gap: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 td{
     padding-left: .5rem;
     padding-right: .5rem;
 }
-
-.tableName, .tableCountry{
-    text-transform: capitalize !important;
-}
-
 .tableName{
     width: 50%;
 }
 .tableAge{
     text-align: center;
-    width: 5%;
+    width: 10%;
 }
 .tableCountry{
     width: 40%;
+}
+
+td:nth-child(even){
+    text-align: center;
 }

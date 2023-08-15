@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../../db/db')
 
-let baseQuery = 'SELECT name, numcode FROM country ORDER BY name ASC'
+let baseQuery = 'SELECT nicename as name, numcode FROM country ORDER BY name ASC'
 
 router.get('/', async (req, res) => {
     let users = await db.query(baseQuery);

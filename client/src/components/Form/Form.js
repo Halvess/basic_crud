@@ -4,13 +4,7 @@ import SelectCountries from '../SelectCountries/SelectCountries'
 import Button from '../Button/Button'
 import api from '../../api/api'
 
-const Form = ({crud, countries, setLoading}) => {
-    const selectOptions = []
-    countries.forEach(country => {
-        selectOptions.push({
-            value: country.numcode,
-            label: country.name
-        })})
+const Form = ({crud, countries, isLoading, setLoading}) => {
 
     const initialState = {name: '', age: 0, numcode: 4}
     const [formData, setFormData] = useState(initialState)
@@ -38,7 +32,7 @@ const Form = ({crud, countries, setLoading}) => {
             clearFields()
         }
     }
-    const stateHandler = (input, value) => {
+    const changeFormData = (input, value) => {
         switch(input){
             case 'text': return setFormData(prevState => {return {...prevState, name: value}})
             case 'number': return setFormData(prevState => {return {...prevState, age: parseInt(value)}})
@@ -48,19 +42,19 @@ const Form = ({crud, countries, setLoading}) => {
 
     let ageValue = formData.age == 0 || formData.age == NaN ? '' : formData.age
     return (
-        <form>
+        <form className='baseMarginTop'>
             <div className='nameDiv'>
                 <label htmlFor='name' name='name'>Name</label>
-                <input onChange={e => {stateHandler('text', e.target.value)}} id='name' type='text' value={formData.name}/>                
+                <input onChange={e => {changeFormData('text', e.target.value)}} id='name' type='text' value={formData.name}/>                
             </div>
             <div className='formRow'>
                 <div className='ageDiv'>
                     <label htmlFor='age' name='age'>Age</label>
-                    <input onChange={e => {stateHandler('number', e.target.value)}} id='age' type='number' value={ageValue}/>
+                    <input onChange={e => {changeFormData('number', e.target.value)}} id='age' type='number' value={ageValue}/>
                 </div>
                 <div className='countryDiv'>
                     <label htmlFor='country' name='country'>Country</label>
-                    <SelectCountries options={selectOptions}/>
+                    <SelectCountries countries={countries} changeFormData={changeFormData}/>
                 </div>
             </div>
             <div className='formRow'>
