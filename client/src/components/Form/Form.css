@@ -40,3 +40,7 @@ input[type='number'], input:focus{
 .ageDiv{
     width: 15%;
 }
+
+.countryDiv{
+    width: 100%;
+}

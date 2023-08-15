@@ -1,10 +1,17 @@
 import './Form.css'
 import { useState, useEffect } from 'react'
-import Select from '../Select/Select'
+import SelectCountries from '../SelectCountries/SelectCountries'
 import Button from '../Button/Button'
 import api from '../../api/api'
 
 const Form = ({crud, countries, setLoading}) => {
+    const selectOptions = []
+    countries.forEach(country => {
+        selectOptions.push({
+            value: country.numcode,
+            label: country.name
+        })})
+
     const initialState = {name: '', age: 0, numcode: 4}
     const [formData, setFormData] = useState(initialState)
     const clearFields = () => {setFormData(prevState => {return {...initialState}})}
@@ -52,11 +59,12 @@ const Form = ({crud, countries, setLoading}) => {
                     <input onChange={e => {stateHandler('number', e.target.value)}} id='age' type='number' value={ageValue}/>
                 </div>
                 <div className='countryDiv'>
-                    <Select countries={countries}/>
+                    <label htmlFor='country' name='country'>Country</label>
+                    <SelectCountries options={selectOptions}/>
                 </div>
             </div>
             <div className='formRow'>
-                    <Button id='submit' placeholder='Submit' type='submit' isMenu={false} clickHandler={clickHandler}/>
+                    <Button id='submit' placeholder='Add User' type='submit' isMenu={false} clickHandler={clickHandler}/>
                     <Button id='reset' placeholder='Clear' type='reset' isMenu={false} clickHandler={clickHandler}/>
                 </div>
         </form>

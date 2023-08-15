@@ -80,9 +80,10 @@ const App = () => {
 
     return (
         <React.StrictMode> 
+            { !isLoading ? 
                 <DataContext.Provider value={{countries, users, isLoading, setLoading}}>
                     <RouterProvider router={router} />                
-                </DataContext.Provider>
+                </DataContext.Provider> : ''}
         </React.StrictMode>
 
     )
