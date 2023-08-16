@@ -6,7 +6,7 @@ import api from '../../api/api'
 
 const Form = ({crud, countries, isLoading, setLoading}) => {
 
-    const initialState = {name: '', age: 0, numcode: 4}
+    const initialState = {name: '', age: 0, numcode: 0}
     const [formData, setFormData] = useState(initialState)
     const clearFields = () => {setFormData(prevState => {return {...initialState}})}
     useEffect(() => {console.log(formData)}, [formData])
@@ -35,12 +35,14 @@ const Form = ({crud, countries, isLoading, setLoading}) => {
     const changeFormData = (input, value) => {
         switch(input){
             case 'text': return setFormData(prevState => {return {...prevState, name: value}})
-            case 'number': return setFormData(prevState => {return {...prevState, age: parseInt(value)}})
+            case 'number': 
+                if (value == '') { 
+                    return setFormData(prevState => {return {...prevState, age: 0}}) 
+                }
+                    return setFormData(prevState => {return {...prevState, age: parseInt(value)}})
             case 'select': return setFormData(prevState => {return {...prevState, numcode: value}})
         }
     }
-
-    let ageValue = formData.age == 0 || formData.age == NaN ? '' : formData.age
     return (
         <form className='baseMarginTop'>
             <div className='nameDiv'>
@@ -50,7 +52,7 @@ const Form = ({crud, countries, isLoading, setLoading}) => {
             <div className='formRow'>
                 <div className='ageDiv'>
                     <label htmlFor='age' name='age'>Age</label>
-                    <input onChange={e => {changeFormData('number', e.target.value)}} id='age' type='number' value={ageValue}/>
+                    <input onChange={e => {changeFormData('number', e.target.value)}} id='age' type='number' value={formData.age == 0 || formData.age == NaN ? '' : formData.age}/>
                 </div>
                 <div className='countryDiv'>
                     <label htmlFor='country' name='country'>Country</label>

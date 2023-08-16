@@ -22,21 +22,48 @@ const SelectCountries = ({countries, changeFormData}) => {
             ...defaultStyles,
             minHeight: '20px',
             background: 'none',
-            border: 'black',
             color: 'white',
             fontWeight: '300',
             borderRadius: '0',
-            borderBottom: '1px solid white',
-            padding: '0',
+            padding: '0 .25rem',
             margin: '0',
-            paddingLeft: '.25rem'
+            paddingLeft: '',
+            borderBottom: '0.1rem solid white'
         }),
         option: (defaultStyles) => ({
             ...defaultStyles,
             background: 'black',
-            color: 'var(--orange-web)',
-            padding: '.25rem'
-        })
+            color: 'white',
+            padding: '.25rem',
+            "&:hover": {
+                background: "var(--orange-web)",
+                color: 'black',
+            }
+        }),
+        menuList: (defaultStyles) => ({
+            ...defaultStyles,
+            border: '.165rem solid var(--orange-web)',
+            borderTop: 'none',
+            "::-webkit-scrollbar": {
+                width: ".25rem",
+                height: "0px",
+              },
+              "::-webkit-scrollbar-track": {
+                background: "black"
+              },
+              "::-webkit-scrollbar-thumb": {
+                background: "var(--cerulean)",
+              },
+              "::-webkit-scrollbar-thumb:hover": {
+                background: "white"
+              }
+        }),
+        noOptionsMessage: (defaultStyles) => ({
+            ...defaultStyles,
+            background: 'black',
+            color: 'white',
+            padding: '.5rem 0'
+        }),
     }
     return (
         <Select 
@@ -47,7 +74,8 @@ const SelectCountries = ({countries, changeFormData}) => {
                 menuIsOpen={isOpen}
                 unstyled 
                 options={options} 
-                styles={styles} />
+                styles={styles} 
+                noOptionsMessage={() => {return 'No country found.'}} />
     )
 
 }

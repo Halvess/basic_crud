@@ -22,12 +22,21 @@ input, select{
     padding: 0;
     background: none;
     border: none;
-    border-bottom: 1px white solid;
+    border-bottom: .1rem white solid;
     vertical-align: bottom;
 }
 
-input[type='number'], input:focus{
-    appearance: none;
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  appearance: none;
+  -moz-appearance: textfield;
 }
 
 .formRow{

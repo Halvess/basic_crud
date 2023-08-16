@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react'
 import './Table.css'
 
 const Table = ( {countries, users} ) => {
+    let [teste, setTeste] = useState(users)
     const [page, setPage] = useState(0)
-    const elementsPerPage = 8
+    const elementsPerPage = 5
     const maxPages = Math.floor(users.length / elementsPerPage)
 
     const nextPage = () => {
@@ -44,19 +45,32 @@ const Table = ( {countries, users} ) => {
             </thead>
             <tbody>
                 {users.map((user, index) => {
+                    let row = <tr key={`table-row-${index}`}>
+                                    <td>{user.name}</td>
+                                    <td >{user.age}</td>
+                                    <td >{getCountryStr(user.numcode)}</td>
+                              </tr>
+
                     let startIndex, endIndex
                     page !== 0 ? startIndex = (page*elementsPerPage) - 1 : startIndex = 0
                     endIndex = startIndex + (elementsPerPage - 1)
                     if (index >= startIndex && index <= endIndex){
-                        return (
-                            <tr key={`table-row-${index}`}>
-                                <td >{user.name}</td>
-                                <td >{user.age}</td>
-                                <td >{getCountryStr(user.numcode)}</td>
-                            </tr>)
-                    }
-                    else{
-                        return null
+                        if (index == (users.length - 1)){
+                            let emptyRows = endIndex - index;
+                            let emptyArr = []
+                            for (let i=0; i<emptyRows; i++){
+                                emptyArr.push(
+                                    <tr key={`empty-row-${i}`} className='emptyRow'>
+                                        <td>null</td>
+                                        <td>null</td>
+                                        <td>null</td>
+                                    </tr>
+                                )
+                            }
+                            return ([row, ...emptyArr])
+                        }
+                        return (row)
+                        
                     }
                 })}
             </tbody>

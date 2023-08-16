@@ -34,6 +34,10 @@ td{
     width: 40%;
 }
 
+.emptyRow{
+    visibility: hidden;
+}
+
 td:nth-child(even){
     text-align: center;
 }
