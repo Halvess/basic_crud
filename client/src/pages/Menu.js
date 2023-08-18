@@ -35,10 +35,10 @@ const Menu = () => {
 
     return (
         <div id='mainMenu' className='menu load' ref={menuRef} onAnimationEnd={(e) => {e.target.className = 'menu'}} onTransitionEnd={(e) => {transitionHandler(e)}}>
-            <Button isMenu={true} id='create' type='button' clickHandler={clickHandler} placeholder='Create'/>
-            <Button isMenu={true} id='read' type='button' clickHandler={clickHandler} placeholder='Read'/>
-            <Button isMenu={true} id='update' type='button' clickHandler={clickHandler} placeholder='Update'/>
-            <Button isMenu={true} id='delete' type='button' clickHandler={clickHandler} placeholder='Delete'/>
+            <Button className='btnMenu' id='create' type='button' clickHandler={clickHandler} placeholder='Create'/>
+            <Button className='btnMenu' id='read' type='button' clickHandler={clickHandler} placeholder='Read'/>
+            <Button className='btnMenu' id='update' type='button' clickHandler={clickHandler} placeholder='Update'/>
+            <Button className='btnMenu' id='delete' type='button' clickHandler={clickHandler} placeholder='Delete'/>
         </div>
     )
 }

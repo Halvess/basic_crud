@@ -1,37 +1,73 @@
 import { useState, useEffect } from 'react'
 import './Table.css'
+import Button from '../Button/Button'
 
 const Table = ( {countries, users} ) => {
-    let [teste, setTeste] = useState(users)
+    const [pageTransition, setPageTransition] = useState(false)
     const [page, setPage] = useState(0)
     const elementsPerPage = 5
     const maxPages = Math.floor(users.length / elementsPerPage)
 
-    const nextPage = () => {
-        return setPage(prevState => {
-            let newState = prevState + 1
-            if (newState >= maxPages){
-                return maxPages
-            }
-            return newState
-        })}
-    const previousPage = () => {
-        return setPage(prevState => {
-            let newState = prevState - 1
-            if (newState <= 0){
-                return 0
-            }
-            return newState
-        })}
     const getCountryStr = (code) => {
         let countryFilter = countries.filter(countryObj => {return countryObj.numcode == code})[0]
         let countryStr = countryFilter.name
         return countryStr
     }
 
-    useEffect(() => {
-        console.log(page)
-    }, [page])
+    let emptyRows = (amount = elementsPerPage) =>{
+        let rowsArr = []
+        for (let i=0; i<amount; i++){
+            rowsArr.push(
+                <tr className='emptyRow' key={`empty-row-${i}`}>
+                    <td>null</td>
+                    <td>null</td>
+                    <td>null</td>
+                </tr>)
+        }
+        return rowsArr
+    }
+
+    const getTableData = () => {
+        return users.map((user, index) => {
+            let row = <tr key={`table-row-${index}`}>
+                            <td>{user.name}</td>
+                            <td >{user.age}</td>
+                            <td >{getCountryStr(user.numcode)}</td>
+                      </tr>
+
+            let startIndex, endIndex
+            page !== 0 ? startIndex = (page*elementsPerPage) - 1 : startIndex = 0
+            endIndex = startIndex + (elementsPerPage - 1)
+            if (index >= startIndex && index <= endIndex){
+                if (index == (users.length - 1)){
+                    let numberOfEmptyRows = endIndex - index;
+                    let emptyRowsArr = emptyRows(numberOfEmptyRows)
+                    let bodyArr = [row, ...emptyRowsArr] 
+                    return [...bodyArr]
+                }
+                return row
+            }})
+    }
+    const updateTableData = () => {
+        setTableData(prevState => {return [...getTableData()]})
+        setPageTransition(false)
+    }
+
+    const nextPage = () => {
+        if (page === maxPages) {return null}
+        setPageTransition(true)
+        setPage(prevState => {return prevState+1})
+    }
+    const previousPage = () => {
+        if (page === 0) {return null}
+        setPageTransition(true)
+        setPage(prevState => {return prevState-1})
+    }
+
+    const [tableData, setTableData] = useState(() => {
+        let teste = getTableData()
+        return [...teste]
+    })
 
     return (
         <>
@@ -43,42 +79,14 @@ const Table = ( {countries, users} ) => {
                     <th className='tableCountry'>country</th>
                 </tr>
             </thead>
-            <tbody>
-                {users.map((user, index) => {
-                    let row = <tr key={`table-row-${index}`}>
-                                    <td>{user.name}</td>
-                                    <td >{user.age}</td>
-                                    <td >{getCountryStr(user.numcode)}</td>
-                              </tr>
-
-                    let startIndex, endIndex
-                    page !== 0 ? startIndex = (page*elementsPerPage) - 1 : startIndex = 0
-                    endIndex = startIndex + (elementsPerPage - 1)
-                    if (index >= startIndex && index <= endIndex){
-                        if (index == (users.length - 1)){
-                            let emptyRows = endIndex - index;
-                            let emptyArr = []
-                            for (let i=0; i<emptyRows; i++){
-                                emptyArr.push(
-                                    <tr key={`empty-row-${i}`} className='emptyRow'>
-                                        <td>null</td>
-                                        <td>null</td>
-                                        <td>null</td>
-                                    </tr>
-                                )
-                            }
-                            return ([row, ...emptyArr])
-                        }
-                        return (row)
-                        
-                    }
-                })}
+            <tbody className={pageTransition ? 'pageTransition' : ''} onTransitionEnd={() => {updateTableData()}}>
+                {tableData}
             </tbody>
         </table>
         <div className='pageSelector baseMarginTop'>
-            <button onClick={() => {previousPage()}}> prev </button>
-            <p> {`page ${page+1}`} </p>
-            <button onClick={() => {nextPage()}}> next </button>
+            <Button className='btnPage' clickHandler={previousPage} placeholder='previous' />
+                <p> {`page ${page+1}`} </p>
+            <Button className='btnPage' clickHandler={nextPage} placeholder='next' />
         </div></>
     )
 

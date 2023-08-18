@@ -56,7 +56,7 @@ const Form = ({crud, countries, isLoading, setLoading}) => {
                 </div>
                 <div className='countryDiv'>
                     <label htmlFor='country' name='country'>Country</label>
-                    <SelectCountries countries={countries} changeFormData={changeFormData}/>
+                    <SelectCountries id='country' countries={countries} changeFormData={changeFormData}/>
                 </div>
             </div>
             <div className='formRow'>

@@ -34,12 +34,19 @@
     height: 2.25rem;
 }
 
-.btnSubmit{
+#submit{
     border: none;
     background-color: var(--orange-web);
 }
-.btnReset{
+#reset{
     border: .1rem solid var(--orange-web);
     background: none;
     color: var(--orange-web);
+}
+
+.btnPage{
+    color: var(--orange-web);
+    background: none;
+    border: none;
+    text-decoration: underline;    
 }

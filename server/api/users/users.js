@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require('../../db/db')
 
 let searchBaseQuery = 'SELECT id, name, age, numcode FROM users'
+let orderByDate = 'ORDER BY last_modify DESC'
 
 router.get('/', async (req, res) => {
     if (!req.query.name && !req.query.age && !req.query['country_code']){
@@ -35,7 +36,7 @@ router.get('/', async (req, res) => {
         values.push(country_code)
     }
 
-    let query = `${searchBaseQuery} WHERE ${nameLike}${ageLike}${countryLike}`
+    let query = `${searchBaseQuery} WHERE ${nameLike}${ageLike}${countryLike} ${orderByDate}`
     try{
         let data =  await db.query(query, values);
         res.status(200).send({...data.rows})

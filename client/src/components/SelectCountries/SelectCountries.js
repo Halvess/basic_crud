@@ -1,7 +1,7 @@
 import Select from 'react-select'
 import { useState } from 'react'
 
-const SelectCountries = ({countries, changeFormData}) => {
+const SelectCountries = ({id, countries, changeFormData}) => {
     const options = []
     countries.forEach(country => {
         options.push({
@@ -66,7 +66,8 @@ const SelectCountries = ({countries, changeFormData}) => {
         }),
     }
     return (
-        <Select 
+        <Select
+                inputId={id}
                 onChange={handleChange}
                 openMenuOnFocus={true}
                 onMenuOpen={openMenu}

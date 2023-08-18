@@ -9,6 +9,7 @@ thead{
 tbody{
     text-align: left;
     color: white;
+    transition: opacity .25s ease;
 }
 
 .pageSelector{
@@ -40,4 +41,8 @@ td{
 
 td:nth-child(even){
     text-align: center;
+}
+
+.pageTransition{
+    opacity: 0;
 }
