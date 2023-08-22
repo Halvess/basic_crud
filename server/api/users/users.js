@@ -2,18 +2,18 @@ const express = require('express');
 const router = express.Router();
 const db = require('../../db/db')
 
-let searchBaseQuery = 'SELECT id, name, age, numcode FROM users'
+let searchBaseQuery = 'SELECT id, name, age, numcode FROM users '
 let orderByDate = 'ORDER BY last_modify DESC'
 
 router.get('/', async (req, res) => {
-    if (!req.query.name && !req.query.age && !req.query['country_code']){
-        let users = await db.query(searchBaseQuery);
+    if (!req.query.name && !req.query.age && !req.query['numcode']){
+        let users = await db.query(searchBaseQuery + orderByDate);
         if (users.rowCount){
             return res.status(200).send({...users.rows})
         }
             return res.status(200).send({message: 'No users found'})
     }
-    let {name, age, country_code} = req.query;
+    let {name, age, numcode} = req.query;
     let searchCount = 0
     let nameLike = ''
     let ageLike = ''
@@ -30,10 +30,10 @@ router.get('/', async (req, res) => {
         ageLike = name ? ' AND ' + `age = $${searchCount}` : `age = $${searchCount}`
         values.push(age)
     }
-    if (country_code){
+    if (numcode){
         searchCount += 1
-        countryLike = name || age ? ' AND ' + `country_code = $${searchCount}` : `country_code = $${searchCount}` 
-        values.push(country_code)
+        countryLike = name || age ? ' AND ' + `numcode = $${searchCount}` : `numcode = $${searchCount}` 
+        values.push(numcode)
     }
 
     let query = `${searchBaseQuery} WHERE ${nameLike}${ageLike}${countryLike} ${orderByDate}`

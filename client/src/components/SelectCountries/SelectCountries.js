@@ -30,22 +30,19 @@ const SelectCountries = ({id, countries, changeFormData}) => {
             paddingLeft: '',
             borderBottom: '0.1rem solid white'
         }),
-        option: (defaultStyles) => ({
+        option: (defaultStyles, state) => ({
             ...defaultStyles,
-            background: 'black',
-            color: 'white',
+            background: state.isFocused ? "var(--orange-web)" : 'black',
+            color: state.isFocused ? "black" : 'white',
             padding: '.25rem',
-            "&:hover": {
-                background: "var(--orange-web)",
-                color: 'black',
-            }
+
         }),
         menuList: (defaultStyles) => ({
             ...defaultStyles,
             border: '.165rem solid var(--orange-web)',
             borderTop: 'none',
             "::-webkit-scrollbar": {
-                width: ".25rem",
+                width: ".5rem",
                 height: "0px",
               },
               "::-webkit-scrollbar-track": {
@@ -65,18 +62,21 @@ const SelectCountries = ({id, countries, changeFormData}) => {
             padding: '.5rem 0'
         }),
     }
+
     return (
         <Select
-                inputId={id}
-                onChange={handleChange}
-                openMenuOnFocus={true}
-                onMenuOpen={openMenu}
-                onMenuClose={closeMenu}
-                menuIsOpen={isOpen}
-                unstyled 
-                options={options} 
-                styles={styles} 
-                noOptionsMessage={() => {return 'No country found.'}} />
+            unstyled
+            inputId={id}
+            on
+            isSearchable={true}
+            onChange={handleChange}
+            onMenuOpen={openMenu}
+            onMenuClose={closeMenu}
+            menuIsOpen={isOpen}
+
+            options={options} 
+            styles={styles}
+            noOptionsMessage={() => {return 'No country found.'}} />
     )
 
 }

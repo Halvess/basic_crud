@@ -3,30 +3,84 @@ import { useState, useEffect } from 'react'
 import SelectCountries from '../SelectCountries/SelectCountries'
 import Button from '../Button/Button'
 import api from '../../api/api'
+import { iterateObjToArray } from '../../utility/utility'
 
-const Form = ({crud, countries, isLoading, setLoading}) => {
-
+const Form = ({crud, countries, setLoading, submitPlaceholder, setSearching, setSearchData}) => {
     const initialState = {name: '', age: 0, numcode: 0}
-    const [formData, setFormData] = useState(initialState)
     const clearFields = () => {setFormData(prevState => {return {...initialState}})}
+    const [formData, setFormData] = useState(initialState)
     useEffect(() => {console.log(formData)}, [formData])
+
+    const capitalizeName = (name = formData.name) => {
+        let nameStr = name
+        let nameArr = nameStr.split(' ')
+        nameArr = nameArr.map(str => {
+            if (str == 'de' || str == 'dos' || str == 'e' || str == 'da'){
+                return str
+            }
+            return str.charAt(0).toUpperCase() + str.slice(1)
+        })
+        nameStr = nameArr.join(' ')
+        return nameStr
+    }
+
     const addUser = async () => {
-        await api.put('/users', formData)
+        let capName = capitalizedName()
+        await api.put('/users', {...formData, name: capName})
         .then(response => {if (response.status == 200){
             console.log(response.data)
             setLoading(true)
         }
-        if (response.status == 400){
-            throw new Error(response.data)
+        else{
+            throw new Error(response.data[0])
         }})
         .catch(err => {console.log(err)})
     }
+
+    const findUser = async () => {
+        let {name, age, numcode} = formData
+        let query = '?'
+        if (name){
+            let capName = capitalizeName()
+            query += `name=${capName}`
+        }
+        if (age){
+            if (name){
+                query+='&'
+            }
+            query += `age=${age}`
+        }
+        if (numcode){
+            if (name || age){
+                query += '&'
+            }
+            query += `numcode=${numcode}`
+        }
+        query = encodeURI(query)
+        await api.get(`/users${query}`)
+        .then(res => {if (res.status === 200){
+                let data = iterateObjToArray(res.data)
+                setSearchData(prevState => {return [...data]})
+                setSearching(false)
+        }
+        else{
+            throw new Error(response.data[0])
+        }})
+        .catch(err => {console.log(err)})
+
+    }
+
     const clickHandler = e => {
         e.preventDefault();
-        console.log(e.target.id)
         if (e.target.id == 'submit'){
             clearFields()
-            addUser()
+            switch(crud){
+                case 'create': addUser(); break;
+                case 'read': findUser(); break; 
+                default: console.log('default'); break;
+            }
+            
+            
         }
         if (e.target.id == 'reset'){
             clearFields()
@@ -44,7 +98,7 @@ const Form = ({crud, countries, isLoading, setLoading}) => {
         }
     }
     return (
-        <form className='baseMarginTop'>
+        <form className='baseMarginTop pagePadding'>
             <div className='nameDiv'>
                 <label htmlFor='name' name='name'>Name</label>
                 <input onChange={e => {changeFormData('text', e.target.value)}} id='name' type='text' value={formData.name}/>                
@@ -60,7 +114,7 @@ const Form = ({crud, countries, isLoading, setLoading}) => {
                 </div>
             </div>
             <div className='formRow'>
-                    <Button id='submit' placeholder='Add User' type='submit' isMenu={false} clickHandler={clickHandler}/>
+                    <Button id='submit' placeholder={submitPlaceholder} type='submit' isMenu={false} clickHandler={clickHandler}/>
                     <Button id='reset' placeholder='Clear' type='reset' isMenu={false} clickHandler={clickHandler}/>
                 </div>
         </form>

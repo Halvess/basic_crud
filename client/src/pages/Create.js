@@ -12,7 +12,7 @@ const Create = () => {
         <div className='menuCreate load'>
             <Header text='Create' />
             <Form crud='create' countries={countries} setLoading={setLoading}/>
-            {!isLoading ? <Table countries={countries} users={users} /> : <></>}
+            {!isLoading ? <Table crud='create' countries={countries} users={users} /> : <></>}
         </div>
     )
 }

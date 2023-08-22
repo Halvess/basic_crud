@@ -12,18 +12,21 @@ tbody{
     transition: opacity .25s ease;
 }
 
-.pageSelector{
-    width: 100%;
-    gap: 1rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-
 td{
     padding-left: .5rem;
     padding-right: .5rem;
 }
+
+td:nth-child(even){
+    text-align: center;
+}
+
+th div{
+    display: flex;
+    justify-content: center;
+    gap: .25rem;
+}
+
 .tableName{
     width: 50%;
 }
@@ -39,10 +42,25 @@ td{
     visibility: hidden;
 }
 
-td:nth-child(even){
-    text-align: center;
+.pageSelector{
+    width: 100%;
+    gap: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .pageTransition{
     opacity: 0;
+}
+
+.sort-asc{
+    width: 1.25rem;
+    content: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20xmlns%3Aserif%3D%22http%3A%2F%2Fwww.serif.com%2F%22%20fill%3D%22%23ffffff%22%20version%3D%221.1%22%20style%3D%22fill-rule%3Aevenodd%3Bclip-rule%3Aevenodd%3Bstroke-linejoin%3Around%3Bstroke-miterlimit%3A2%3B%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%0A%3Cpath%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20id%3D%22caret-down%22%20d%3D%22M32.149%2C45.79l-24.071%2C-24.071l3.009%2C-3.009l21.062%2C21.062l21.061%2C-21.062l3.009%2C3.009l-24.07%2C24.071Z%22%20style%3D%22fill-rule%3Anonzero%3B%22%2F%3E%0A%0A%0A%0A%3C%2Fsvg%3E");
+}
+
+.sort-desc{
+    width: 1.25rem;
+    content: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20xmlns%3Aserif%3D%22http%3A%2F%2Fwww.serif.com%2F%22%20fill%3D%22%23ffffff%22%20version%3D%221.1%22%20style%3D%22fill-rule%3Aevenodd%3Bclip-rule%3Aevenodd%3Bstroke-linejoin%3Around%3Bstroke-miterlimit%3A2%3B%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%0A%3Cpath%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20id%3D%22caret-down%22%20d%3D%22M32.149%2C45.79l-24.071%2C-24.071l3.009%2C-3.009l21.062%2C21.062l21.061%2C-21.062l3.009%2C3.009l-24.07%2C24.071Z%22%20style%3D%22fill-rule%3Anonzero%3B%22%2F%3E%0A%0A%0A%0A%3C%2Fsvg%3E");
+    transform: rotate(180deg);
 }

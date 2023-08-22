@@ -14,7 +14,7 @@ import './globals.css'
 const router = createBrowserRouter([
 {
     path: "/",
-    element: <Create />
+    element: <Read />
 },
 {
     path: "create",
@@ -42,6 +42,9 @@ const App = () => {
             .then(res => {
                 if (res.status == 200){
                     let userArr = []
+                    if (res.data.hasOwnProperty('message')){
+                        return null
+                    }
                     let users = res.data
                     for (let index in users){
                         userArr.push(users[index])
@@ -79,11 +82,10 @@ const App = () => {
     useEffect(() => {setLoading(false)}, [users])
 
     return (
-        <React.StrictMode> 
-            { !isLoading ? 
-                <DataContext.Provider value={{countries, users, isLoading, setLoading}}>
-                    <RouterProvider router={router} />                
-                </DataContext.Provider> : ''}
+        <React.StrictMode>  
+            <DataContext.Provider value={{countries, users, isLoading, setLoading}}>
+                <RouterProvider router={router} />                
+            </DataContext.Provider>
         </React.StrictMode>
 
     )
