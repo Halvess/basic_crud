@@ -39,13 +39,6 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-.formRow{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-}
-
 .ageDiv{
     width: 15%;
 }

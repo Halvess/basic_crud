@@ -14,7 +14,7 @@ import './globals.css'
 const router = createBrowserRouter([
 {
     path: "/",
-    element: <Read />
+    element: <Delete />
 },
 {
     path: "create",

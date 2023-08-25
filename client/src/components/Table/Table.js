@@ -2,12 +2,52 @@ import { useState, useMemo, useEffect, useRef } from 'react'
 import './Table.css'
 import Button from '../Button/Button'
 
-const Table = ( {countries, users} ) => {
+const Table = ( {crud, countries, users, setUpdate, deleteData, setDeleteData} ) => {
     const [tableSort, setTableSort] = useState({sortBy: '', sortType: ''})
+
+    const updateInitialState = {id: 0, name: '', age: 0, numcode: 0}
+    const [updateSelected, setUpdateSelected] = useState({id: 0, name: '', age: 0, numcode: 0})
+
     const [pageTransition, setPageTransition] = useState(false)
     const [page, setPage] = useState(0)
     const elementsPerPage = 5
     const maxPages = Math.ceil(users.length / elementsPerPage)
+
+    const handleCrud = user => {
+        let {id, name, age, numcode} = user
+        let newState
+        if (crud == 'delete'){
+            if (checkSelected(id)){
+                newState = deleteData
+                let indexOfId = newState.indexOf(id)
+                let deletedId = newState.splice(indexOfId, 1)
+                return setDeleteData(prevState => {return [...newState]})
+            }
+            newState = deleteData
+            newState.push(id)
+            return setDeleteData(prevState=>{return [...newState]})
+        }
+        if (crud == 'update'){
+            if (checkSelected(id)){
+                return setUpdateSelected(prevState => {return {...updateInitialState}})
+            }
+                let newState = {id: id, name: name, age: age, numcode: numcode}
+                return setUpdateSelected(prevState=>{return {...newState}})
+        }
+        return null
+    }
+    const checkSelected = id => {
+        if (deleteData.length == 0){
+            return false
+        }
+        if (crud == 'delete'){
+            return deleteData.includes(id)
+        }
+        if (crud == 'update'){
+            return id === updateSelected.id
+        }
+        return false
+    }
 
     const sortHandler = (source) => {
         let newSort = ''
@@ -54,7 +94,11 @@ const Table = ( {countries, users} ) => {
 
     let dataPerPage = useMemo(() => {
         if (users.length == 0){
-            return []
+            let emptyPage = [];
+            for (let i=0;i<elementsPerPage;i++){
+                emptyPage.push(null)
+            }
+            return [['noUser', ...emptyPage]]
         }
         let pageArr = []
         for (let i=0; i<maxPages; i++){
@@ -63,8 +107,7 @@ const Table = ( {countries, users} ) => {
             let userData = users.slice(startIndex, endIndex)
             .map(user => {
                 return {
-                    name: user.name,
-                    age: user.age,
+                    ...user,
                     country: getCountryStr(user.numcode)
                 }
             })
@@ -96,6 +139,9 @@ const Table = ( {countries, users} ) => {
             pageData.sort(sortCompareFn)
         }
         tableData = pageData.map((user, index) => {
+            if (user === 'noUser'){
+                return  <tr key={'userLess'}><td className='userLess'>No users found on the database.</td></tr>
+            }
             if (user === null){
                 return      <tr className='emptyRow' key={`emptyRow-${index}-page-${page+1}`}>
                                 <td>null</td>
@@ -103,7 +149,9 @@ const Table = ( {countries, users} ) => {
                                 <td>null</td>
                             </tr>
             }
-            return  <tr key={`row-${index}-page-${page+1}`}>
+            return  <tr onClick={() => {handleCrud(user)}}
+                        className={checkSelected(user.id) ? 'rowSelected' : crud == 'delete' || crud == 'update' ? 'rowHover' : ''}
+                        key={`row-${index}-page-${page+1}`}>
                             <td>{user.name}</td>
                             <td>{user.age}</td>
                             <td>{user.country}</td>
@@ -137,7 +185,7 @@ const Table = ( {countries, users} ) => {
                 </tr>
             </thead>
             <tbody className={pageTransition ? 'pageTransition' : ''} onTransitionEnd={() => {setPageTransition(false)}}>
-                {users.length == 0 ? [] : tableData}
+                {tableData}
             </tbody>
         </table>
     {users.length > elementsPerPage ?

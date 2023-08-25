@@ -37,11 +37,15 @@
 #submit{
     border: none;
     background-color: var(--orange-web);
+    transition: background-color .3s ease,
+                color .3s ease;
 }
 #reset{
     border: .1rem solid var(--orange-web);
     background: none;
     color: var(--orange-web);
+    transition: border-color .3s ease,
+    color .3s ease;
 }
 
 .btnPage{
@@ -49,4 +53,18 @@
     background: none;
     border: none;
     text-decoration: underline;    
+}
+
+.btnDelete{
+    width: 25%;
+}
+
+#submit:hover{
+    color: white;
+    background-color: var(--cerulean);
+}
+
+#reset:hover{
+    color: white;
+    border-color: var(--cerulean);
 }

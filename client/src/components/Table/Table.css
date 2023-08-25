@@ -1,4 +1,5 @@
 table{
+    border-spacing: 0;
     width: 100%;
 }
 thead{
@@ -12,9 +13,28 @@ tbody{
     transition: opacity .25s ease;
 }
 
+tr{
+    transition: background-color .5s ease;   
+    cursor: pointer;
+}
+
+.userLess{
+    width: 100%;
+}
+
+.userLess{
+    position: absolute;
+    left: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.rowHover:hover{
+    background-color: var(--cerulean);
+}
+
 td{
-    padding-left: .5rem;
-    padding-right: .5rem;
+    padding: .25rem;
 }
 
 td:nth-child(even){
@@ -40,6 +60,12 @@ th div{
 
 .emptyRow{
     visibility: hidden;
+}
+
+.rowSelected{
+    background: solid;
+    background-color: var(--cerulean);
+    color: white;
 }
 
 .pageSelector{

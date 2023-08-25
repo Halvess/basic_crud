@@ -65,7 +65,7 @@ router.put('/', async (req,res) => {
 })
 
 router.delete('/', async (req,res) => {
-    let idValues = [...req.body.id]
+    let idValues = req.body.id 
     let deleteQuery = 'DELETE FROM users WHERE id IN '
     idValues.forEach((id, index) => {
         if (index == 0){

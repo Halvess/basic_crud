@@ -89,6 +89,14 @@
   margin-top: 1rem;
 }
 
+.formRow{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+}
+
 .debug{
   color:white;
   font-size: 8pt;
