@@ -5,12 +5,14 @@ import Context from '../components/Context'
 import Header from '../components/Header/Header'
 import Table from '../components/Table/Table'
 import Button from '../components/Button/Button'
+import Modal from '../components/Modal/Modal'
 import api from '../api/api'
 
 
 const Delete  = () => {
     const {countries, users, isLoading, setLoading} = useContext(Context)
     const [deleteData, setDeleteData] = useState([])
+    const [raiseModal, setModal] = useState(true)
 
     const clickHandler = async e => {
         e.preventDefault()
@@ -41,9 +43,10 @@ const Delete  = () => {
 
     return (
         <div className='menuDelete load'>
+            {raiseModal ? <Modal isActive={true}/> : null}
             <Header text='Delete' />
             {!isLoading ? <Table crud='delete' countries={countries} users={users} deleteData={deleteData} setDeleteData={setDeleteData}/> : <></>}
-            <div className='formRow'>
+            <div className='formRow largeMarginTop'>
                     <Button id='submit' className='btnDelete' placeholder='Delete users' type='submit' clickHandler={clickHandler}/>
                     <Button id='reset' className='btnDelete' placeholder='Cancel' type='reset' clickHandler={clickHandler}/>
             </div>

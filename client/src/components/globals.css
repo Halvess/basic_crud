@@ -85,8 +85,25 @@
   100% {opacity: 1;}
 }
 
+.smallMarginTop{
+  margin-top: .5rem;
+}
+.smallMarginBottom{
+  margin-bottom: .5rem;
+}
+
 .baseMarginTop{
   margin-top: 1rem;
+}
+.baseMarginBottom{
+  margin-bottom: 1rem;
+}
+
+.largeMarginTop{
+  margin-top: 2rem;
+}
+.largeMarginBottom{
+  margin-bottom: 2rem;
 }
 
 .formRow{
@@ -103,4 +120,8 @@
   max-height: 300px;
   width: 100%;
   margin: 3rem;
+}
+
+.active{
+  visibility: visible;
 }
