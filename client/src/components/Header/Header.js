@@ -1,9 +1,9 @@
 import './Header.css'
 
-const Header = ({text, inModal=false}) => {
+const Header = ({text}) => {
     return (
-        <header className ={!inModal ? 'headerContainer pagePadding' : 'headerContainer justifyCenter'}>
-            <h1 className={'header'}>{text}</h1>
+        <header className ='headerContainer pagePadding'>
+            <h1 className='header'>{text}</h1>
         </header>
     )
 }
