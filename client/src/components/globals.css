@@ -106,6 +106,10 @@
   margin-bottom: 2rem;
 }
 
+.justifyCenter{
+  justify-content: center;
+}
+
 .formRow{
   width: 100%;
   display: flex;

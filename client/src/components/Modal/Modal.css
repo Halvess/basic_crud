@@ -7,11 +7,16 @@ section{
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0, .75);
+    animation-name: load;
+    animation-iteration-count: 1;
+    animation-duration: .25s;
+    animation-timing-function: ease;
 }
 
 #modal{
     width: 100%;
-    margin: 2rem 2rem;
+    position: relative;
+    margin: 6rem 3rem;
     background-color: black;
     border: .25rem solid var(--orange-web) ;
     border-radius: 1rem;
