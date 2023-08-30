@@ -34,18 +34,23 @@
     height: 2.25rem;
 }
 
-#submit{
+#submit, #confirm{
     border: none;
     background-color: var(--orange-web);
     transition: background-color .3s ease,
                 color .3s ease;
 }
-#reset{
+
+#reset, #return{
     border: .1rem solid var(--orange-web);
     background: none;
     color: var(--orange-web);
     transition: border-color .3s ease,
     color .3s ease;
+}
+
+#confirm, #return{
+    width: 75%;
 }
 
 .btnPage{
@@ -59,12 +64,15 @@
     width: 25%;
 }
 
-#submit:hover{
+
+
+#submit:hover, #confirm:hover{
     color: white;
     background-color: var(--cerulean);
 }
 
-#reset:hover{
+#reset:hover, #return:hover{
     color: white;
     border-color: var(--cerulean);
 }
+

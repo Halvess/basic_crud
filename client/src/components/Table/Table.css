@@ -28,10 +28,6 @@ tr{
     text-align: center;
 }
 
-.rowHover:hover{
-    background-color: var(--cerulean);
-}
-
 td{
     padding: .25rem;
 }
@@ -62,7 +58,6 @@ th div{
 }
 
 .rowSelected{
-    background: solid;
     background-color: var(--cerulean);
     color: white;
 }

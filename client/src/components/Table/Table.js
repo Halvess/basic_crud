@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect, useRef } from 'react'
 import './Table.css'
 import Button from '../Button/Button'
 
-const Table = ( {crud, countries, users, setUpdate, deleteData, setDeleteData} ) => {
+const Table = ( {origin='', countries=[], users=[], setUpdate, deleteData=[], setDeleteData} ) => {
     const [tableSort, setTableSort] = useState({sortBy: '', sortType: ''})
 
     const updateInitialState = {id: 0, name: '', age: 0, numcode: 0}
@@ -13,10 +13,17 @@ const Table = ( {crud, countries, users, setUpdate, deleteData, setDeleteData} )
     const elementsPerPage = 5
     const maxPages = Math.ceil(users.length / elementsPerPage)
 
-    const handleCrud = user => {
+    const handleTableMouseOver = e => {
+        return e.currentTarget.style.background = 'var(--cerulean)'
+    }
+    const handleTableMouseOut = e => {
+        return e.currentTarget.style.background = ''
+    }
+
+    const handleOrigin = user => {
         let {id, name, age, numcode} = user
         let newState
-        if (crud == 'delete'){
+        if (origin == 'delete'){
             if (checkSelected(id)){
                 newState = deleteData
                 let indexOfId = newState.indexOf(id)
@@ -27,7 +34,7 @@ const Table = ( {crud, countries, users, setUpdate, deleteData, setDeleteData} )
             newState.push(id)
             return setDeleteData(prevState=>{return [...newState]})
         }
-        if (crud == 'update'){
+        if (origin == 'update'){
             if (checkSelected(id)){
                 return setUpdateSelected(prevState => {return {...updateInitialState}})
             }
@@ -40,10 +47,10 @@ const Table = ( {crud, countries, users, setUpdate, deleteData, setDeleteData} )
         if (deleteData.length == 0){
             return false
         }
-        if (crud == 'delete'){
+        if (origin == 'delete'){
             return deleteData.includes(id)
         }
-        if (crud == 'update'){
+        if (origin == 'update'){
             return id === updateSelected.id
         }
         return false
@@ -93,7 +100,7 @@ const Table = ( {crud, countries, users, setUpdate, deleteData, setDeleteData} )
     }
 
     let dataPerPage = useMemo(() => {
-        if (users.length == 0){
+        if (users.length == 0 || countries.length == 0){
             let emptyPage = [];
             for (let i=0;i<elementsPerPage;i++){
                 emptyPage.push(null)
@@ -149,8 +156,10 @@ const Table = ( {crud, countries, users, setUpdate, deleteData, setDeleteData} )
                                 <td>null</td>
                             </tr>
             }
-            return  <tr onClick={() => {handleCrud(user)}}
-                        className={checkSelected(user.id) ? 'rowSelected' : crud == 'delete' || crud == 'update' ? 'rowHover' : ''}
+            return  <tr onClick={() => {handleOrigin(user)}}
+                        className={checkSelected(user.id) ? 'rowSelected' : null}
+                        onMouseOver={handleTableMouseOver}
+                        onMouseOut={handleTableMouseOut}
                         key={`row-${index}-page-${page+1}`}>
                             <td>{user.name}</td>
                             <td>{user.age}</td>
@@ -184,7 +193,7 @@ const Table = ( {crud, countries, users, setUpdate, deleteData, setDeleteData} )
                     <th onClick={() => {sortHandler('country')}} className='tableCountry'><div><span>country</span>{sortBy == 'country' && sortType !== '' ? sortArrow : ''}</div></th>
                 </tr>
             </thead>
-            <tbody className={pageTransition ? 'pageTransition' : ''} onTransitionEnd={() => {setPageTransition(false)}}>
+            <tbody className={pageTransition ? 'pageTransition' : null} onTransitionEnd={() => {setPageTransition(false)}}>
                 {tableData}
             </tbody>
         </table>

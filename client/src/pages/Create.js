@@ -11,8 +11,8 @@ const Create = () => {
     return (
         <div className='menuCreate load'>
             <Header text='Create' />
-            <Form crud='create' countries={countries} setLoading={setLoading}/>
-            {!isLoading ? <Table crud='create' countries={countries} users={users} /> : <></>}
+            <Form origin='create' countries={countries} setLoading={setLoading}/>
+            {!isLoading ? <Table origin='create' countries={countries} users={users} /> : <></>}
         </div>
     )
 }

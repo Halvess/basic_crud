@@ -15,7 +15,7 @@ const Read = () => {
     return (
         <div className='menuRead load'>
             <Header text='Read' />
-            <Form crud='read' countries={countries} setSearching={setSearching} setSearchData={setSearchData} submitPlaceholder='Search'/>
+            <Form origin='read' countries={countries} setSearching={setSearching} setSearchData={setSearchData} submitPlaceholder='Search'/>
             {!searching ? <Table countries={countries} users={searchData} /> : <></>}
         </div>
     )

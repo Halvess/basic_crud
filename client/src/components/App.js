@@ -42,14 +42,16 @@ const App = () => {
             .then(res => {
                 if (res.status == 200){
                     let userArr = []
-                    if (res.data.hasOwnProperty('message')){
+                    let users = res.data
+                    if (users.hasOwnProperty('message')){
+                        setLoading(false) 
                         return null
                     }
-                    let users = res.data
                     for (let index in users){
                         userArr.push(users[index])
                     }
-                    setUsers(prevState => {return [...userArr]})    
+                    setUsers(prevState => {return [...userArr]})
+                    setLoading(false)  
                 }})
          }
     
@@ -72,22 +74,23 @@ const App = () => {
     }
 
     useEffect(() => {
-        getCountries()
-    }, [])
-    useEffect(() => {
-        if (isLoading){
-            getUsers()
+        if (countries.length == 0){
+            getCountries()
         }
+        getUsers()
+    }, [])
+
+    useEffect(() => {
+        getUsers()
     }, [isLoading])
-    useEffect(() => {setLoading(false)}, [users])
 
     return (
+        !isLoading ?
         <React.StrictMode>  
             <DataContext.Provider value={{countries, users, isLoading, setLoading}}>
-                <RouterProvider router={router} />                
+                <RouterProvider router={router} />        
             </DataContext.Provider>
-        </React.StrictMode>
-
+        </React.StrictMode> : null
     )
 }
 

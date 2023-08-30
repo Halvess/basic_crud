@@ -11,6 +11,7 @@ section{
     animation-iteration-count: 1;
     animation-duration: .25s;
     animation-timing-function: ease;
+    transition: opacity .25s ease;
 }
 
 #modal{
@@ -20,4 +21,22 @@ section{
     background-color: black;
     border: .25rem solid var(--orange-web) ;
     border-radius: 1rem;
+}
+
+.modalWrapper{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.modalBtnWrapper{
+    width: 100%;
+    gap: .5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modalBtn button{
+    width: 75%;
 }

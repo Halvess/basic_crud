@@ -5,7 +5,7 @@ import Button from '../Button/Button'
 import api from '../../api/api'
 import { iterateObjToArray } from '../../utility/utility'
 
-const Form = ({crud, countries, setLoading, submitPlaceholder, setSearching, setSearchData}) => {
+const Form = ({origin, countries, setLoading, submitPlaceholder, resetPlaceholder, setSearching, setSearchData}) => {
     const initialState = {name: '', age: 0, numcode: 0}
     const clearFields = () => {setFormData(prevState => {return {...initialState}})}
     const [formData, setFormData] = useState(initialState)
@@ -25,7 +25,7 @@ const Form = ({crud, countries, setLoading, submitPlaceholder, setSearching, set
     }
 
     const addUser = async () => {
-        let capName = capitalizedName()
+        let capName = capitalizeName()
         await api.put('/users', {...formData, name: capName})
         .then(response => {if (response.status == 200){
             console.log(response.data)
@@ -74,7 +74,7 @@ const Form = ({crud, countries, setLoading, submitPlaceholder, setSearching, set
         e.preventDefault();
         if (e.target.id == 'submit'){
             clearFields()
-            switch(crud){
+            switch(origin){
                 case 'create': addUser(); break;
                 case 'read': findUser(); break; 
                 default: console.log('default'); break;
@@ -114,7 +114,7 @@ const Form = ({crud, countries, setLoading, submitPlaceholder, setSearching, set
                 </div>
             </div>
             <div className='formRow'>
-                    <Button id='submit' placeholder={submitPlaceholder} type='submit' isMenu={false} clickHandler={clickHandler}/>
+                    <Button id='submit' placeholder='Submit' type='submit' isMenu={false} clickHandler={clickHandler}/>
                     <Button id='reset' placeholder='Clear' type='reset' isMenu={false} clickHandler={clickHandler}/>
                 </div>
         </form>

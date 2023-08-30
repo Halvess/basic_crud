@@ -1,7 +1,8 @@
 import axios from 'axios'
 
+
 const api = axios.create({
-    baseURL: 'http://192.168.2.116:3030/api',
+    baseURL: `http://${process.env.REACT_APP_SERVER_IP}:${process.env.REACT_APP_SERVER_PORT}/api`,
     timeout: 1000
   });
 
