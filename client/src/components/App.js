@@ -45,7 +45,7 @@ const App = () => {
                     let users = res.data
                     if (users.hasOwnProperty('message')){
                         setLoading(false) 
-                        return null
+                        return setUsers(prevState => {return []})
                     }
                     for (let index in users){
                         userArr.push(users[index])
@@ -81,7 +81,9 @@ const App = () => {
     }, [])
 
     useEffect(() => {
-        getUsers()
+        if (isLoading){
+            getUsers()
+        }
     }, [isLoading])
 
     return (

@@ -15,8 +15,6 @@ const Delete  = () => {
     const [deleteData, setDeleteData] = useState([])
     const [showModal, setModal] = useState(false)
 
-    useEffect(() => {console.log('changes')}, [users,countries])
-
     let modalTableArr = []
     if (deleteData.length !== 0){
         deleteData.forEach(id => {
@@ -55,8 +53,6 @@ const Delete  = () => {
             setDeleteData(prevState => {return []})
         }
     }
-
-    useEffect(() => {console.log(deleteData), []})
     
     const submitPlaceholder = 'Delete users'
     const resetPlaceholder = 'Cancel'

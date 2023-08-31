@@ -64,7 +64,15 @@
     width: 25%;
 }
 
-
+.btnBack{
+    border: none;
+    background: none;
+    width: 4rem;
+    height: 100%;
+    border-bottom: .25rem solid black;
+    border-left: .25rem solid black;
+    transform: rotate(45deg);
+}
 
 #submit:hover, #confirm:hover{
     color: white;
@@ -75,4 +83,6 @@
     color: white;
     border-color: var(--cerulean);
 }
+
+
 

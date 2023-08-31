@@ -11,3 +11,8 @@
     font-weight: 400;
     color: var(--oxford-blue)
 }
+
+.menuReturnWrapper{
+    width: 4rem;
+    height: 100%;
+}
