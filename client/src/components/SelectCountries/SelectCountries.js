@@ -1,7 +1,7 @@
 import Select from 'react-select'
 import { useState } from 'react'
 
-const SelectCountries = ({id, countries, changeFormData}) => {
+const SelectCountries = ({id, countries, changeFormData, value, disabled, hasError}) => {
     const options = []
     countries.forEach(country => {
         options.push({
@@ -11,7 +11,8 @@ const SelectCountries = ({id, countries, changeFormData}) => {
 
     const [isOpen, setOpen] = useState(false)
     const openMenu = () => {setOpen(true)}
-    const closeMenu = () => {setOpen(false)} 
+    const closeMenu = () => {setOpen(false)}
+
 
     const handleChange = (selected) => {
         changeFormData('select', selected.value)
@@ -24,11 +25,12 @@ const SelectCountries = ({id, countries, changeFormData}) => {
             background: 'none',
             color: 'white',
             fontWeight: '300',
-            borderRadius: '0',
+            borderRadius: '.25rem',
             padding: '0 .25rem',
             margin: '0',
             paddingLeft: '',
-            borderBottom: '0.1rem solid white'
+            border: hasError ? '.15rem solid var(--cerulean)' : '.15rem solid rgba(0,0,0,0)',
+            borderBottom: hasError ? '.15rem solid var(--cerulean)' : '0.1rem solid white', 
         }),
         option: (defaultStyles, state) => ({
             ...defaultStyles,
@@ -64,16 +66,16 @@ const SelectCountries = ({id, countries, changeFormData}) => {
     }
 
     return (
-        <Select
+        <Select 
+            value = {options.filter(option => {return option.value == value})}
             unstyled
             inputId={id}
-            on
+            isDisabled = {disabled}
             isSearchable={true}
             onChange={handleChange}
             onMenuOpen={openMenu}
             onMenuClose={closeMenu}
             menuIsOpen={isOpen}
-
             options={options} 
             styles={styles}
             noOptionsMessage={() => {return 'No country found.'}} />

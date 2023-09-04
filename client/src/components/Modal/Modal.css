@@ -14,13 +14,19 @@ section{
     transition: opacity .25s ease;
 }
 
-#modal{
+#modal-container{
     width: 100%;
-    position: relative;
     margin: 6rem 3rem;
     background-color: black;
     border: .25rem solid var(--orange-web) ;
     border-radius: 1rem;
+}
+
+#modal{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .modalWrapper{

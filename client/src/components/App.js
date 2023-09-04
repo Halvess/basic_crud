@@ -1,5 +1,5 @@
 import React from 'react';
-import {createBrowserRouter, RouterProvider} from 'react-router-dom'
+import {createBrowserRouter, RouterProvider, useNavigate} from 'react-router-dom'
 import {useMemo, useState, useEffect, useRef} from 'react'
 import api from '../api/api'
 
@@ -14,7 +14,7 @@ import './globals.css'
 const router = createBrowserRouter([
 {
     path: "/",
-    element: <Delete />
+    element: <Menu />
 },
 {
     path: "create",
@@ -34,6 +34,7 @@ const router = createBrowserRouter([
 ])
 
 const App = () => {
+
     const [countries, setCountries] = useState([])
     const [users, setUsers] = useState([])
     const [isLoading, setLoading] = useState(true)
@@ -87,12 +88,11 @@ const App = () => {
     }, [isLoading])
 
     return (
-        !isLoading ?
         <React.StrictMode>  
             <DataContext.Provider value={{countries, users, isLoading, setLoading}}>
                 <RouterProvider router={router} />        
             </DataContext.Provider>
-        </React.StrictMode> : null
+        </React.StrictMode>
     )
 }
 

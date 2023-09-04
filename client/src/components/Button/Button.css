@@ -11,12 +11,12 @@
     border: none;
     border-bottom: 1px solid var(--orange-web);
     transition: color .25s ease,
-                box-shadow 1s ease;
+                box-shadow .75s ease;
 }
 
-.btnMenu:hover{
+.menuHover{
     color: white;
-    box-shadow: inset 100vw 0 0 0 var(--orange-web);
+    box-shadow: inset 99.9vw 0 0 0 var(--orange-web);
 }
 
 .menuClicked{
@@ -28,10 +28,10 @@
     border-bottom: none;
 }
 
+
 .btnSubmit, .btnReset {
-    border-radius: .25rem;
     width: 100%;
-    height: 2.25rem;
+    height: 2rem;
 }
 
 #submit, #confirm{
@@ -62,26 +62,6 @@
 
 .btnDelete{
     width: 25%;
-}
-
-.btnBack{
-    border: none;
-    background: none;
-    width: 4rem;
-    height: 100%;
-    border-bottom: .25rem solid black;
-    border-left: .25rem solid black;
-    transform: rotate(45deg);
-}
-
-#submit:hover, #confirm:hover{
-    color: white;
-    background-color: var(--cerulean);
-}
-
-#reset:hover, #return:hover{
-    color: white;
-    border-color: var(--cerulean);
 }
 
 

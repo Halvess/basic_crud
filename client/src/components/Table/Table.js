@@ -2,15 +2,13 @@ import { useState, useMemo, useEffect, useRef } from 'react'
 import './Table.css'
 import Button from '../Button/Button'
 
-const Table = ( {origin='', countries=[], users=[], setUpdate, deleteData=[], setDeleteData} ) => {
+const Table = ({origin='', countries=[], users=[], deleteData=[], setDeleteData, setUpdateData, clearUpdateData, elementsPerPage=5} ) => {
     const [tableSort, setTableSort] = useState({sortBy: '', sortType: ''})
 
-    const updateInitialState = {id: 0, name: '', age: 0, numcode: 0}
-    const [updateSelected, setUpdateSelected] = useState({id: 0, name: '', age: 0, numcode: 0})
+    const [updateSelected, setUpdateSelected] = useState(-1)
 
     const [pageTransition, setPageTransition] = useState(false)
     const [page, setPage] = useState(0)
-    const elementsPerPage = 5
     const maxPages = Math.ceil(users.length / elementsPerPage)
 
     const handleTableMouseOver = e => {
@@ -36,22 +34,27 @@ const Table = ( {origin='', countries=[], users=[], setUpdate, deleteData=[], se
         }
         if (origin == 'update'){
             if (checkSelected(id)){
-                return setUpdateSelected(prevState => {return {...updateInitialState}})
+                setUpdateSelected(-1)
+                return clearUpdateData()
             }
+                setUpdateSelected(id)
                 let newState = {id: id, name: name, age: age, numcode: numcode}
-                return setUpdateSelected(prevState=>{return {...newState}})
+                return setUpdateData(prevState => {return {...newState}})
         }
         return null
     }
+
+    useEffect(() => {console.log(updateSelected), [updateSelected]})
+
     const checkSelected = id => {
-        if (deleteData.length == 0){
-            return false
-        }
         if (origin == 'delete'){
+            if (deleteData.length == 0){
+                return false
+            }
             return deleteData.includes(id)
         }
         if (origin == 'update'){
-            return id === updateSelected.id
+            return id === updateSelected
         }
         return false
     }

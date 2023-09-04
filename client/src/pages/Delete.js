@@ -23,7 +23,7 @@ const Delete  = () => {
         })
     }
 
-    let modalTable = <Table origin='modal' countries={countries} users={deleteData.length !== 0 ? modalTableArr: []}/>
+    let modalTable = <Table origin='modal' elementsPerPage={8} countries={countries} users={deleteData.length !== 0 ? modalTableArr: []}/>
 
     const deleteItems = async () => {
         if (deleteData.length !== 0){
@@ -63,7 +63,7 @@ const Delete  = () => {
         <div className='menuDelete load'>
             {showModal ? <Modal show={showModal} children={modalTable} message={modalMessage} confirmFn={() => {deleteItems()}} closeModal={()=>{setModal(false)}}/> : null}
             <Header text='Delete' />
-            <Text content={disclaimerText} classes='largeMarginTop'/>
+            <Text content={disclaimerText} className='disclaimer largeMarginTop pagePadding'/>
             {!isLoading ? <Table origin='delete' countries={countries} users={users} deleteData={deleteData} setDeleteData={setDeleteData}/> : <></>}
             <div className='formRow largeMarginTop'>
                     <Button id='submit' className='btnDelete' placeholder={submitPlaceholder} type='submit' clickHandler={clickHandler}/>

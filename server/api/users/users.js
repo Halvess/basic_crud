@@ -90,7 +90,7 @@ router.delete('/', async (req,res) => {
 })
 
 router.patch('/', async (req,res) => {
-    const {id, name, age, country_code} = req.body
+    const {id, name, age, numcode} = req.body
     if (!id){
         return res.status(400).send({message: 'id must be specified'})
     }
@@ -110,13 +110,13 @@ router.patch('/', async (req,res) => {
         updateQuery += ` age=$${valuesCounter}`
         values.push(age)
     }
-    if (country_code){
+    if (numcode){
         valuesCounter += 1
         if (name || age){
             updateQuery += ','
         }
-        updateQuery += ` age=$${valuesCounter}`
-        values.push(age)
+        updateQuery += ` numcode=$${valuesCounter}`
+        values.push(numcode)
     }
     valuesCounter += 1 
     updateQuery += `, last_modify = to_timestamp($${valuesCounter})`
@@ -126,7 +126,7 @@ router.patch('/', async (req,res) => {
     values.push(id)
     try{
         let data = db.query(updateQuery, values)
-        res.status(200).send({message: 'Row successfuly modified'})
+        res.status(200).send({message: 'Row successfuly updated'})
     }
     catch(err){
         res.status(500).send({message:'Internal server error'})

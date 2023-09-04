@@ -2,14 +2,71 @@ import './Form.css'
 import { useState, useEffect } from 'react'
 import SelectCountries from '../SelectCountries/SelectCountries'
 import Button from '../Button/Button'
+import Text from '../Text/Text'
 import api from '../../api/api'
 import { iterateObjToArray } from '../../utility/utility'
 
-const Form = ({origin, countries, setLoading, submitPlaceholder, resetPlaceholder, setSearching, setSearchData}) => {
-    const initialState = {name: '', age: 0, numcode: 0}
+const Form = ({origin, countries, setLoading, submitPlaceholder = 'Submit', resetPlaceholder = 'Clear', setSearching, setSearchData, updateData, errorMessage}) => {
+    const initialState = {name: '', age: 0, numcode: -1}
     const clearFields = () => {setFormData(prevState => {return {...initialState}})}
-    const [formData, setFormData] = useState(initialState)
-    useEffect(() => {console.log(formData)}, [formData])
+    const [formError, setFormError] = useState({name: true, age: true, numcode:true})
+    const [formData, setFormData] = useState({...initialState})
+    const [hasError, setHasError] = useState(false)
+
+    const {nameError, ageError, numcodeError} = formError
+
+    useEffect(() => {
+        if (origin == 'update'){
+            setFormData(prevState => {
+                return {...prevState, name: updateData.name, age: updateData.age, numcode: updateData.numcode}
+            })
+        }
+    }, [updateData])
+
+    useEffect(() => {
+        let {name, age, numcode} = formData
+        if (name == ''){
+            setFormError(prevState => {return {...prevState, name: true}})
+        }
+        else{
+            setFormError(prevState => {return {...prevState, name: false}})
+        }
+        if (age == 0 || age == ''){
+            setFormError(prevState => {return {...prevState, age: true}})
+        }
+        else{
+            setFormError(prevState => {return {...prevState, age: false}})
+        }
+        if (numcode < 0 ){
+            setFormError(prevState => {return {...prevState, numcode: true}})
+        }
+        else{
+            setFormError(prevState => {return {...prevState, numcode: false}})
+        }
+    }, [formData])
+
+    useEffect(() => {
+        let {name, age, numcode} = formError
+        if (!name && !age && !numcode){
+            setHasError(false)
+        }
+    }, [formError])
+
+    const hasInputError = () => {
+        const {name, age, numcode} = formError   
+        if (origin == 'create'){
+            if (name || age || numcode){
+                return true
+            }
+        }
+        if (origin == 'update' || origin == 'read'){
+            if (name && age && numcode){
+                return true
+            }
+        }
+        setHasError(false)
+        return false
+    }
 
     const capitalizeName = (name = formData.name) => {
         let nameStr = name
@@ -37,20 +94,33 @@ const Form = ({origin, countries, setLoading, submitPlaceholder, resetPlaceholde
         .catch(err => {console.log(err)})
     }
 
+    const updateUser = async () => {
+        let capName = capitalizeName()
+        await api.patch('/users', {id: updateData.id, ...formData, name: capName})
+        .then(response => {if (response.status == 200){
+            console.log(response.data)
+            setLoading(true)
+        }
+        else{
+            throw new Error(response.data[0])
+        }})
+        .catch(err => {console.log(err)})
+    }
+
     const findUser = async () => {
         let {name, age, numcode} = formData
         let query = '?'
-        if (name){
+        if (name !== ''){
             let capName = capitalizeName()
             query += `name=${capName}`
         }
-        if (age){
+        if (age > 0){
             if (name){
                 query+='&'
             }
             query += `age=${age}`
         }
-        if (numcode){
+        if (numcode >= 0){
             if (name || age){
                 query += '&'
             }
@@ -70,22 +140,25 @@ const Form = ({origin, countries, setLoading, submitPlaceholder, resetPlaceholde
 
     }
 
-    const clickHandler = e => {
+    const submitHandler = e => {
         e.preventDefault();
-        if (e.target.id == 'submit'){
-            clearFields()
-            switch(origin){
-                case 'create': addUser(); break;
-                case 'read': findUser(); break; 
-                default: console.log('default'); break;
-            }
-            
-            
+        if (hasInputError()){
+            setHasError(true)
+            return null
         }
-        if (e.target.id == 'reset'){
-            clearFields()
+        clearFields()
+        switch(origin){
+            case 'create': addUser(); break;
+            case 'read': findUser(); break; 
+            case 'update': updateUser(); break; 
+            default: console.log('default'); break;
         }
     }
+
+    const resetHandler = e => {
+        return clearFields()
+    }
+
     const changeFormData = (input, value) => {
         switch(input){
             case 'text': return setFormData(prevState => {return {...prevState, name: value}})
@@ -97,37 +170,34 @@ const Form = ({origin, countries, setLoading, submitPlaceholder, resetPlaceholde
             case 'select': return setFormData(prevState => {return {...prevState, numcode: value}})
         }
     }
+
+    const isDisabled = () => {
+        return origin == 'update' && formData.name == ''
+    }
+
     return (
         <form className='baseMarginTop pagePadding'>
             <div className='nameDiv'>
                 <label htmlFor='name' name='name'>Name</label>
-                <input onChange={e => {changeFormData('text', e.target.value)}} id='name' type='text' value={formData.name}/>                
+                <input className={hasError && formError.name ? 'inputError' : null} onChange={e => {changeFormData('text', e.target.value)}} id='name' type='text' value={formData.name} disabled={isDisabled()}/>                
             </div>
             <div className='formRow'>
                 <div className='ageDiv'>
                     <label htmlFor='age' name='age'>Age</label>
-                    <input onChange={e => {changeFormData('number', e.target.value)}} id='age' type='number' value={formData.age == 0 || formData.age == NaN ? '' : formData.age}/>
+                    <input className={hasError && formError.age ? 'inputError' : null} onChange={e => {changeFormData('number', e.target.value)}} id='age' type='number' disabled={isDisabled()} value={formData.age == 0 || formData.age == NaN ? '' : formData.age}/>
                 </div>
                 <div className='countryDiv'>
                     <label htmlFor='country' name='country'>Country</label>
-                    <SelectCountries id='country' countries={countries} changeFormData={changeFormData}/>
+                    <SelectCountries hasError={hasError && formError.numcode} id='country' countries={countries} disabled={isDisabled()} value={formData.numcode} changeFormData={changeFormData}/>
                 </div>
             </div>
-            <div className='formRow'>
-                    <Button id='submit' placeholder='Submit' type='submit' isMenu={false} clickHandler={clickHandler}/>
-                    <Button id='reset' placeholder='Clear' type='reset' isMenu={false} clickHandler={clickHandler}/>
-                </div>
+            {hasError ? <Text content={errorMessage} className='error padgePadding' /> : null}
+            <div className='formRow smallMarginTop'>
+                    <Button id='submit' className='btnSubmit' placeholder={submitPlaceholder} type='submit' isMenu={false} clickHandler={submitHandler}/>
+                    <Button id='reset' className='btnReset' placeholder={resetPlaceholder} type='reset' isMenu={false} clickHandler={resetHandler}/>
+            </div>
         </form>
     )
 }
-
-/*                     <label htmlFor='country' name='country'>Country</label>
-                    <select id='country' className='selectCountries'>
-                    {countries.map(countryData => {
-                        let name = countryData.name
-                        let numcode = countryData.numcode
-                        return <option key={`option-country-${numcode}`} value={numcode}>{name}</option>
-                    })} 
-                    </select> */
 
 export default Form

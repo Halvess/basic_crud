@@ -1,11 +1,8 @@
-const Text = ({type = '', content, classes=''}) => {
-    let className
-    switch(type){
-        case 'error': className = 'error'; break;
-        default: className = 'disclaimer'; break;
-    }
+import './Text.css'
+
+const Text = ({content, className = ''}) => {
     return (
-        <p className={`${className} pagePadding ${classes}`}>
+        <p className={className}>
             {content}  
         </p>
     )

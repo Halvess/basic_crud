@@ -1,6 +1,7 @@
 .headerContainer{
     display: flex;
     align-items: center;
+    justify-content: space-between;
     width: 100%;
     height: 4rem;
     background: var(--orange-web);
@@ -15,4 +16,17 @@
 .menuReturnWrapper{
     width: 4rem;
     height: 100%;
+}
+
+.linkMenu{
+    font-size: 1rem;
+    color: black;
+}
+
+.linkMenu:visited{
+    color: black;
+}
+
+.linkMenu:hover{
+    color: white;
 }

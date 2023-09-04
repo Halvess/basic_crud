@@ -1,16 +1,12 @@
-import { useNavigate } from 'react-router-dom'
-import Button from '../Button/Button'
+import { Link } from 'react-router-dom'
 
 import './Header.css'
 
 const Header = ({text, inModal=false}) => {
-    const navigate = useNavigate()
     return (
         <header className ={!inModal ? 'headerContainer pagePadding' : 'headerContainer justifyCenter'}>
-            <div className='menuReturnWrapper'>
-                <Button id='menu-return' className='btnBack' type='button' clickHandler={() => {navigate('/')}}/>
-            </div>
             <h1 className={'header'}>{text}</h1>
+            {!inModal ? <Link className='linkMenu' to={'/'}> {'< main menu'}</Link> : null}
         </header>
     )
 }
