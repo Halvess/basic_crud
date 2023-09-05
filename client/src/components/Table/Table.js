@@ -49,7 +49,6 @@ const Table = ({origin='', className, countries=[], users=[], deleteData=[], upd
         return null
     }
 
-    useEffect(() => {console.log(updateSelected), [updateSelected]})
 
     const checkSelected = id => {
         if (origin == 'delete'){

@@ -33,7 +33,6 @@ const Delete  = () => {
             }
             await api.delete('/users', {data: deleteJSON})
             .then(res => {if (res.status == 200){
-                console.log(res.data)
                 setDeleteData(prevState => {return []})
                 return setLoading(true)
             }
