@@ -29,7 +29,6 @@ const Menu = () => {
         href = e.target.id
         let clickedElement = e.target
         let clickedElementPosition = clickedElement.getBoundingClientRect();
-        console.log(clickedElementPosition)
         let transitionDiv = document.createElement('div');
         transitionDiv.className = 'menuTransition'
         transitionDiv.style.height = clickedElementPosition.height + 'px'
