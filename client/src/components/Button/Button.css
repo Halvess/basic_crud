@@ -11,7 +11,7 @@
     border: none;
     border-bottom: 1px solid var(--orange-web);
     transition: color .25s ease,
-                box-shadow .75s ease;
+                box-shadow 1s ease;
 }
 
 .menuHover{
@@ -37,32 +37,53 @@
 #submit, #confirm{
     border: none;
     background-color: var(--orange-web);
-    transition: background-color .3s ease,
-                color .3s ease;
 }
 
 #reset, #return{
     border: .1rem solid var(--orange-web);
     background: none;
     color: var(--orange-web);
-    transition: border-color .3s ease,
-    color .3s ease;
-}
-
-#confirm, #return{
-    width: 75%;
 }
 
 .btnPage{
+    padding: 0;
     color: var(--orange-web);
     background: none;
+    text-align: end;
+
     border: none;
-    text-decoration: underline;    
+    text-decoration: underline; 
+
+}
+
+.btnPage:last-child{
+    text-align: left;
 }
 
 .btnDelete{
     width: 25%;
 }
 
+.btnModal{
+    width: 75%;
+}
 
 
+#submit:enabled:active{
+    background: black;
+    color: white;
+    border: .1rem solid var(--orange-web);
+}
+
+#reset:enabled:active{
+    background: var(--orange-web);
+    color: white;
+}
+
+#submit:disabled, #reset:disabled{
+    opacity: .5;
+}
+
+#submit:disabled{
+    color: black;
+}

@@ -22,12 +22,10 @@ const Menu = () => {
 
     let href = ''
     const navigate = useNavigate();
-    
-    const clickHandler = e => {
-        setTimeout(() => {e.target.className += ' menuClicked'}, 10)
-    }
 
-    const animateToMenu = (e) => {
+
+    const clickHandler = (e) => {
+        setTimeout(() => {e.target.className += ' menuClicked'}, 10)
         href = e.target.id
         let clickedElement = e.target
         let clickedElementPosition = clickedElement.getBoundingClientRect();
@@ -47,9 +45,6 @@ const Menu = () => {
         }
         if (e.target.id == 'mainMenu'){
             return navigate(href)
-        }
-        if (e.target.className.includes('menuClicked') && e.propertyName == 'box-shadow'){
-            animateToMenu(e)
         }
     }
 

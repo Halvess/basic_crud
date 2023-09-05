@@ -1,8 +1,8 @@
 import './Button.css'
 
-const Button = ({id, className, placeholder, type, clickHandler, onMouseOver, onMouseOut, onAnimationEnd}) => {
+const Button = ({id, className, placeholder, type, clickHandler, onMouseOver, onMouseOut, disabled}) => {
     return (
-            <button className={className} id={id} type={type} onClick={clickHandler} onMouseOver={onMouseOver} onMouseOut={onMouseOut} onAnimationEnd={onAnimationEnd}>{placeholder} </button>
+            <button disabled={disabled ? 'disabled' : ''} className={className} id={id} type={type} onClick={clickHandler} onMouseOver={onMouseOver} onMouseOut={onMouseOut}>{placeholder}</button>
     )
 }
 

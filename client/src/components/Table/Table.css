@@ -7,6 +7,7 @@ thead{
     color: white;
 }
 
+
 tbody{
     text-align: left;
     color: white;
@@ -37,20 +38,32 @@ td:nth-child(even){
 }
 
 th div{
+    padding: .25rem;
+    display: flex;
+    justify-content: space-between;
+    gap: .25rem;
+}
+
+th:nth-child(even) div{
+    padding: .25rem;
     display: flex;
     justify-content: center;
     gap: .25rem;
 }
 
 .tableName{
-    width: 50%;
+    width: 45%;
 }
 .tableAge{
     text-align: center;
-    width: 10%;
+    width: 15%;
 }
 .tableCountry{
     width: 40%;
+}
+
+.tableHover{
+    background: var(--cerulean);
 }
 
 .emptyRow{
@@ -64,10 +77,18 @@ th div{
 
 .pageSelector{
     width: 100%;
-    gap: 1rem;
     display: flex;
     flex-direction: row;
     justify-content: center;
+}
+
+.pageSelector p{
+    text-align: center;
+    width: 20%;
+}
+
+.pageSelector button{
+    width: 20%;
 }
 
 .pageTransition{

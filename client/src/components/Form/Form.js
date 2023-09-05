@@ -6,14 +6,18 @@ import Text from '../Text/Text'
 import api from '../../api/api'
 import { iterateObjToArray } from '../../utility/utility'
 
-const Form = ({origin, countries, setLoading, submitPlaceholder = 'Submit', resetPlaceholder = 'Clear', setSearching, setSearchData, updateData, errorMessage}) => {
+const Form = ({origin, countries, setLoading, submitPlaceholder = 'Submit', resetPlaceholder = 'Clear', setSearching, setSearchData, updateData, errorMessage, clearUpdateData}) => {
     const initialState = {name: '', age: 0, numcode: -1}
-    const clearFields = () => {setFormData(prevState => {return {...initialState}})}
+    const clearFields = () => {
+        setFormData(prevState => {return {...initialState}})
+    }
     const [formError, setFormError] = useState({name: true, age: true, numcode:true})
     const [formData, setFormData] = useState({...initialState})
     const [hasError, setHasError] = useState(false)
 
-    const {nameError, ageError, numcodeError} = formError
+    const isDisabled = () => {
+        return origin == 'update' && formData.numcode == -1
+    }
 
     useEffect(() => {
         if (origin == 'update'){
@@ -47,10 +51,13 @@ const Form = ({origin, countries, setLoading, submitPlaceholder = 'Submit', rese
 
     useEffect(() => {
         let {name, age, numcode} = formError
-        if (!name && !age && !numcode){
-            setHasError(false)
+        if ((!name && !age && !numcode) && origin == 'create'){
+            return setHasError(false)
         }
-    }, [formError])
+        if ((!name || !age || !numcode) && origin == 'read'){
+            return setHasError(false)
+        }
+    }, [formError.name, formError.age, formError.numcode])
 
     const hasInputError = () => {
         const {name, age, numcode} = formError   
@@ -59,7 +66,12 @@ const Form = ({origin, countries, setLoading, submitPlaceholder = 'Submit', rese
                 return true
             }
         }
-        if (origin == 'update' || origin == 'read'){
+        if (origin == 'read'){
+            if (name && age && numcode){
+                return true
+            }
+        }
+        if (origin == 'update'){
             if (name && age && numcode){
                 return true
             }
@@ -99,6 +111,7 @@ const Form = ({origin, countries, setLoading, submitPlaceholder = 'Submit', rese
         await api.patch('/users', {id: updateData.id, ...formData, name: capName})
         .then(response => {if (response.status == 200){
             console.log(response.data)
+            clearUpdateData()
             setLoading(true)
         }
         else{
@@ -142,6 +155,9 @@ const Form = ({origin, countries, setLoading, submitPlaceholder = 'Submit', rese
 
     const submitHandler = e => {
         e.preventDefault();
+        if (isDisabled()){
+            return null
+        }
         if (hasInputError()){
             setHasError(true)
             return null
@@ -156,6 +172,10 @@ const Form = ({origin, countries, setLoading, submitPlaceholder = 'Submit', rese
     }
 
     const resetHandler = e => {
+        if (origin == 'update'){
+            clearUpdateData()
+        }
+        setHasError(false)
         return clearFields()
     }
 
@@ -169,10 +189,6 @@ const Form = ({origin, countries, setLoading, submitPlaceholder = 'Submit', rese
                     return setFormData(prevState => {return {...prevState, age: parseInt(value)}})
             case 'select': return setFormData(prevState => {return {...prevState, numcode: value}})
         }
-    }
-
-    const isDisabled = () => {
-        return origin == 'update' && formData.name == ''
     }
 
     return (
@@ -192,9 +208,9 @@ const Form = ({origin, countries, setLoading, submitPlaceholder = 'Submit', rese
                 </div>
             </div>
             {hasError ? <Text content={errorMessage} className='error padgePadding' /> : null}
-            <div className='formRow smallMarginTop'>
-                    <Button id='submit' className='btnSubmit' placeholder={submitPlaceholder} type='submit' isMenu={false} clickHandler={submitHandler}/>
-                    <Button id='reset' className='btnReset' placeholder={resetPlaceholder} type='reset' isMenu={false} clickHandler={resetHandler}/>
+            <div className='formRow baseMarginTop'>
+                    <Button id='submit' disabled={isDisabled()} className='btnSubmit' placeholder={submitPlaceholder} type='submit' isMenu={false} clickHandler={submitHandler}/>
+                    <Button id='reset' disabled={isDisabled()} className='btnReset' placeholder={resetPlaceholder} type='reset' isMenu={false} clickHandler={resetHandler}/>
             </div>
         </form>
     )

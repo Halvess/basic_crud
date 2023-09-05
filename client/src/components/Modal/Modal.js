@@ -17,20 +17,18 @@ const Modal = ({show, children, message, deleteData, confirmFn, closeModal}) => 
     }
     return (
         show ? 
-            <section id='modal-background' ref={sectionRef} onTransitionEnd={(e) => {e.target.id == 'modal-section' ? closeModal() : null}}>
-                <div id='modal-container'>
+            <section id='modal-background' ref={sectionRef} onTransitionEnd={(e) => {e.target.id == 'modal-background' ? closeModal() : null}}>
                     <div id='modal'>
                         <div>
                             <Header text='Confirm Deletion' inModal={true}/>
                                 <Text content={message} className='pagePadding baseMarginTop'/>
                                 {children}
                         </div>
-                        <div className='modalBtnWrapper baseMarginBottom'>
+                        <div className='modalBtnWrapper largeMarginTop largeMarginBottom pagePadding'>
                             <Button id='confirm' className='btnSubmit btnModal' placeholder='confirm' type='submit' clickHandler={clickHandler}/>
                             <Button id='return' className='btnReset btnModal' placeholder='return' type='reset' clickHandler={clickHandler}/>
                         </div>
                     </div>
-                </div>
             </section> : null
         )
     }

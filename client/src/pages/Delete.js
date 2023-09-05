@@ -23,7 +23,7 @@ const Delete  = () => {
         })
     }
 
-    let modalTable = <Table origin='modal' elementsPerPage={8} countries={countries} users={deleteData.length !== 0 ? modalTableArr: []}/>
+    let modalTable = <Table origin='modal' className='baseMarginTop' elementsPerPage={8} countries={countries} users={deleteData.length !== 0 ? modalTableArr: []}/>
 
     const deleteItems = async () => {
         if (deleteData.length !== 0){
@@ -44,14 +44,14 @@ const Delete  = () => {
         }
     }
 
-    const clickHandler = e => {
-        e.preventDefault()
-        if (e.target.id == 'submit' && deleteData.length !== 0){
+
+    const submitHandler = e => {
+        if (deleteData.length !== 0){
             return setModal(true)
         }
-        if (e.target.id == 'reset'){
-            setDeleteData(prevState => {return []})
-        }
+    }
+    const resetHandler = e => {
+        setDeleteData([])
     }
     
     const submitPlaceholder = 'Delete users'
@@ -63,11 +63,11 @@ const Delete  = () => {
         <div className='menuDelete load'>
             {showModal ? <Modal show={showModal} children={modalTable} message={modalMessage} confirmFn={() => {deleteItems()}} closeModal={()=>{setModal(false)}}/> : null}
             <Header text='Delete' />
-            <Text content={disclaimerText} className='disclaimer largeMarginTop pagePadding'/>
-            {!isLoading ? <Table origin='delete' countries={countries} users={users} deleteData={deleteData} setDeleteData={setDeleteData}/> : <></>}
+            <Text content={disclaimerText} className='disclaimer baseMarginTop pagePadding'/>
+            {!isLoading ? <Table origin='delete' className='baseMarginTop' countries={countries} users={users} deleteData={deleteData} setDeleteData={setDeleteData}/> : <></>}
             <div className='formRow largeMarginTop'>
-                    <Button id='submit' className='btnDelete' placeholder={submitPlaceholder} type='submit' clickHandler={clickHandler}/>
-                    <Button id='reset' className='btnDelete' placeholder={resetPlaceholder} type='reset' clickHandler={clickHandler}/>
+                    <Button disabled={deleteData.length == 0 ? true : false} id='submit' className='btnDelete' placeholder={submitPlaceholder} type='submit' clickHandler={submitHandler}/>
+                    <Button disabled={deleteData.length == 0 ? true : false} id='reset' className='btnDelete' placeholder={resetPlaceholder} type='reset' clickHandler={resetHandler}/>
             </div>
         </div>
     )

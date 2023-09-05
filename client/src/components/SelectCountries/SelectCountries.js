@@ -37,6 +37,7 @@ const SelectCountries = ({id, countries, changeFormData, value, disabled, hasErr
             background: state.isFocused ? "var(--orange-web)" : 'black',
             color: state.isFocused ? "black" : 'white',
             padding: '.25rem',
+            fontWeight: '300'
 
         }),
         menuList: (defaultStyles) => ({

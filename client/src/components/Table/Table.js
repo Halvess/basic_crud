@@ -2,20 +2,27 @@ import { useState, useMemo, useEffect, useRef } from 'react'
 import './Table.css'
 import Button from '../Button/Button'
 
-const Table = ({origin='', countries=[], users=[], deleteData=[], setDeleteData, setUpdateData, clearUpdateData, elementsPerPage=5} ) => {
+const Table = ({origin='', className, countries=[], users=[], deleteData=[], updateSelected, setDeleteData, setUpdateData, clearUpdateData, elementsPerPage=10} ) => {
     const [tableSort, setTableSort] = useState({sortBy: '', sortType: ''})
-
-    const [updateSelected, setUpdateSelected] = useState(-1)
 
     const [pageTransition, setPageTransition] = useState(false)
     const [page, setPage] = useState(0)
     const maxPages = Math.ceil(users.length / elementsPerPage)
 
     const handleTableMouseOver = e => {
-        return e.currentTarget.style.background = 'var(--cerulean)'
+        if (origin !== 'update' || origin !== 'delete'){
+            return null
+        }
+        if (e.currentTarget.className == 'rowSelected'){
+            return null
+        }
+        return e.currentTarget.className = 'tableHover'
     }
     const handleTableMouseOut = e => {
-        return e.currentTarget.style.background = ''
+        if (origin == 'modal'){
+            return null
+        }
+        return e.currentTarget.className = (e.currentTarget.className).replace('tableHover', '')
     }
 
     const handleOrigin = user => {
@@ -34,10 +41,8 @@ const Table = ({origin='', countries=[], users=[], deleteData=[], setDeleteData,
         }
         if (origin == 'update'){
             if (checkSelected(id)){
-                setUpdateSelected(-1)
                 return clearUpdateData()
             }
-                setUpdateSelected(id)
                 let newState = {id: id, name: name, age: age, numcode: numcode}
                 return setUpdateData(prevState => {return {...newState}})
         }
@@ -188,7 +193,7 @@ const Table = ({origin='', countries=[], users=[], deleteData=[], setDeleteData,
 
     return (
         <>
-        <table className='pagePadding baseMarginTop'>
+        <table className={'pagePadding ' + className}>
             <thead>
                 <tr>
                     <th onClick={() => {sortHandler('name')}} className='tableName'><div><span>name</span>{sortBy == 'name' && sortType !== '' ? sortArrow : ''}</div></th>
@@ -201,10 +206,10 @@ const Table = ({origin='', countries=[], users=[], deleteData=[], setDeleteData,
             </tbody>
         </table>
     {users.length > elementsPerPage ?
-        <div className='pageSelector baseMarginTop'>
-            <Button className='btnPage' clickHandler={previousPage} placeholder='previous' />
+        <div className='pageSelector pagePadding baseMarginTop'>
+            <Button className={page == 0 ? 'btnPage hidden' : 'btnPage'}  clickHandler={previousPage} placeholder='previous' />
                 <p> {`page ${page+1}`} </p>
-            <Button className='btnPage' clickHandler={nextPage} placeholder='next' />
+            <Button className={page+1 >= maxPages ? 'btnPage hidden' : 'btnPage'} clickHandler={nextPage} placeholder='next' />
         </div> : ''
     }        
         </>

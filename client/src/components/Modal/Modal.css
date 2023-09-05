@@ -2,6 +2,7 @@ section{
     position: absolute;
     display: flex;
     justify-content: center;
+    align-items: center;
     top: 0;
     left: 0;
     width: 100%;
@@ -14,16 +15,10 @@ section{
     transition: opacity .25s ease;
 }
 
-#modal-container{
-    width: 100%;
-    margin: 6rem 3rem;
-    background-color: black;
-    border: .25rem solid var(--orange-web) ;
-    border-radius: 1rem;
-}
-
 #modal{
-    height: 100%;
+    margin: 0 2rem ;
+    background-color: black;
+    border: .25rem solid var(--orange-web);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -41,8 +36,4 @@ section{
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.modalBtn button{
-    width: 75%;
 }
