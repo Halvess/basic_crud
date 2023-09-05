@@ -1,10 +1,13 @@
+import { Link } from 'react-router-dom'
+
 import './Header.css'
 
-const Header = ({text}) => {
+const Header = ({text, inModal=false}) => {
     return (
-        <div className ='headerContainer'>
-            <h1 className='header'>{text}</h1>
-        </div>
+        <header className ={!inModal ? 'headerContainer pagePadding' : 'headerContainer justifyCenter'}>
+            <h1 className={'header'}>{text}</h1>
+            {!inModal ? <Link className='linkMenu' to={'/'}> {'< main menu'}</Link> : null}
+        </header>
     )
 }
 
