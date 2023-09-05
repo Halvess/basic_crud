@@ -1,17 +1,32 @@
 .headerContainer{
-    position: absolute;
     display: flex;
     align-items: center;
-    top: 0;
-    left: 0;
-    padding-left: 2rem;
+    justify-content: space-between;
     width: 100%;
-    height: 6rem;
+    height: 4rem;
     background: var(--orange-web);
 }
 
 .header{
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: 400;
     color: var(--oxford-blue)
+}
+
+.menuReturnWrapper{
+    width: 4rem;
+    height: 100%;
+}
+
+.linkMenu{
+    font-size: 1rem;
+    color: black;
+}
+
+.linkMenu:visited{
+    color: black;
+}
+
+.linkMenu:hover{
+    color: white;
 }

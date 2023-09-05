@@ -14,9 +14,9 @@
                 box-shadow 1s ease;
 }
 
-.btnMenu:hover{
+.menuHover{
     color: white;
-    box-shadow: inset 100vw 0 0 0 var(--orange-web);
+    box-shadow: inset 99.9vw 0 0 0 var(--orange-web);
 }
 
 .menuClicked{
@@ -26,4 +26,64 @@
 
 .btnMenu:last-child{
     border-bottom: none;
+}
+
+
+.btnSubmit, .btnReset {
+    width: 100%;
+    height: 2rem;
+}
+
+#submit, #confirm{
+    border: none;
+    background-color: var(--orange-web);
+}
+
+#reset, #return{
+    border: .1rem solid var(--orange-web);
+    background: none;
+    color: var(--orange-web);
+}
+
+.btnPage{
+    padding: 0;
+    color: var(--orange-web);
+    background: none;
+    text-align: end;
+
+    border: none;
+    text-decoration: underline; 
+
+}
+
+.btnPage:last-child{
+    text-align: left;
+}
+
+.btnDelete{
+    width: 25%;
+}
+
+.btnModal{
+    width: 75%;
+}
+
+
+#submit:enabled:active{
+    background: black;
+    color: white;
+    border: .1rem solid var(--orange-web);
+}
+
+#reset:enabled:active{
+    background: var(--orange-web);
+    color: white;
+}
+
+#submit:disabled, #reset:disabled{
+    opacity: .5;
+}
+
+#submit:disabled{
+    color: black;
 }
