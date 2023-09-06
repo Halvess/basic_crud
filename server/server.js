@@ -3,11 +3,13 @@ const apiRouter = require('./api/api');
 const dotenv = require('dotenv');
 const logDate = require('./utils/logDate')
 const cors = require('cors');
+const compression = require('compression')
 dotenv.config();
 
 
 
 const server = express()
+server.use(compression())
 server.use(cors({
     origin: '*'
 }))
