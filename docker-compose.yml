@@ -1,0 +1,63 @@
+version: '3'
+services:
+  client:
+    image: basic_crud/client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+    command: npm start
+    depends_on:
+      - server
+
+  server:
+    image: basic_crud/server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - 3030:3030
+    volumes:
+      - /app/node_modules
+    command: node server.js
+    depends_on:
+      - db
+    networks: 
+      - node-network
+    env_file:
+      - ./server/.env
+
+  db:
+    image: postgres:latest
+    hostname: localhost
+    container_name: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: basic_crud
+    volumes:
+      - ./db/data:/var/lib/postgresql/data
+      - ./db/seed/seed.sql:/docker-entrypoint-initdb.d/seed.sql
+    networks: 
+      - node-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    ports:
+      - '8080:80'
+    environment:
+      PGADMIN_DEFAULT_EMAIL: postgres@pg.com
+      PGADMIN_DEFAULT_PASSWORD: postgres
+    networks: 
+      - node-network
+
+networks: 
+  node-network:
+    driver: bridge
