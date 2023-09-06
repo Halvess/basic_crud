@@ -49,6 +49,7 @@ const Table = ({origin='', className, countries=[], users=[], deleteData=[], upd
         return null
     }
 
+
     const checkSelected = id => {
         if (origin == 'delete'){
             if (deleteData.length == 0){
