@@ -1,6 +1,6 @@
 import React from 'react';
-import {createBrowserRouter, RouterProvider, useNavigate} from 'react-router-dom'
-import {useMemo, useState, useEffect, useRef} from 'react'
+import {createBrowserRouter, RouterProvider} from 'react-router-dom'
+import {useState, useEffect} from 'react'
 import api from '../api/api'
 
 import Menu from '../pages/Menu'

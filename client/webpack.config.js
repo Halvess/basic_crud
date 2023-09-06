@@ -1,5 +1,15 @@
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
+const webpack = require('webpack')
+const dotenv = require('dotenv')
+
+const env = dotenv.config().parsed
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  prev[`process.env.${next}`] = JSON.stringify(env[next])
+  return prev
+}, {})
 
 module.exports = {
 
@@ -14,6 +24,8 @@ module.exports = {
         new HTMLWebpackPlugin({
             template: './app/index.html'
         }),
+        new webpack.DefinePlugin(envKeys),
+        new BundleAnalyzerPlugin(),
     ],
 
     devServer:{
