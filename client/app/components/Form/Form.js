@@ -209,8 +209,8 @@ const Form = ({origin, countries, setLoading, submitPlaceholder = 'Submit', rese
             </div>
             {hasError ? <Text content={errorMessage} className='error padgePadding' /> : null}
             <div className='formRow baseMarginTop'>
-                    <Button id='submit' disabled={isDisabled()} className='btnSubmit' placeholder={submitPlaceholder} type='submit' isMenu={false} clickHandler={submitHandler}/>
                     <Button id='reset' disabled={isDisabled()} className='btnReset' placeholder={resetPlaceholder} type='reset' isMenu={false} clickHandler={resetHandler}/>
+                    <Button id='submit' disabled={isDisabled()} className='btnSubmit' placeholder={submitPlaceholder} type='submit' isMenu={false} clickHandler={submitHandler}/>
             </div>
         </form>
     )
