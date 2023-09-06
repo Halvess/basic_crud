@@ -4,6 +4,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 const webpack = require('webpack')
 const dotenv = require('dotenv')
+const CompressionPlugin = require('compression-webpack-plugin')
 
 const env = dotenv.config().parsed
 const envKeys = Object.keys(env).reduce((prev, next) => {
@@ -26,6 +27,7 @@ module.exports = {
         }),
         new webpack.DefinePlugin(envKeys),
         new BundleAnalyzerPlugin(),
+        new CompressionPlugin(),        
     ],
 
     devServer:{
