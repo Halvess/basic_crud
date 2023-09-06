@@ -15,8 +15,6 @@ const Update = () => {
         return setUpdateData(prevState => {return {...updateInitialState}})
     }
 
-    useEffect(() => {console.log(updateData)}, [updateData])
-
     const submitPlaceholder = 'Update user'
     const resetPlaceholder = 'Reset'
     const disclaimerText = `Click on a row at the table and then edit the user data in the form, then click on ${submitPlaceholder} to update its value. Click on ${resetPlaceholder} to clear all changes`

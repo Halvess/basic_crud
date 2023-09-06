@@ -97,7 +97,6 @@ const Form = ({origin, countries, setLoading, submitPlaceholder = 'Submit', rese
         let capName = capitalizeName()
         await api.put('/users', {...formData, name: capName})
         .then(response => {if (response.status == 200){
-            console.log(response.data)
             setLoading(true)
         }
         else{
@@ -110,7 +109,6 @@ const Form = ({origin, countries, setLoading, submitPlaceholder = 'Submit', rese
         let capName = capitalizeName()
         await api.patch('/users', {id: updateData.id, ...formData, name: capName})
         .then(response => {if (response.status == 200){
-            console.log(response.data)
             clearUpdateData()
             setLoading(true)
         }
@@ -167,7 +165,7 @@ const Form = ({origin, countries, setLoading, submitPlaceholder = 'Submit', rese
             case 'create': addUser(); break;
             case 'read': findUser(); break; 
             case 'update': updateUser(); break; 
-            default: console.log('default'); break;
+            default: null; break;
         }
     }
 
