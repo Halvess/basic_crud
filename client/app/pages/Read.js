@@ -24,7 +24,7 @@ const Read = () => {
             <Header text='Read' />
             <Text className='disclaimer pagePadding baseMarginTop' content={disclaimerText} />
             <Form origin='read' countries={countries} setSearching={setSearching} setSearchData={setSearchData} submitPlaceholder={submitPlaceholder} resetPlaceholder={resetPlaceholder} errorMessage={errorMessage}/>
-            {!searching ? <Table className='largeMarginTop' countries={countries} users={searchData} /> : <></>}
+            {!searching ? <Table className='largeMarginTop' countries={countries} users={searchData} isLoading={isLoading}/> : <></>}
         </div>
     )
  }
