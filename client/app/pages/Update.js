@@ -26,7 +26,10 @@ const Update = () => {
             <Header text='Update' />
             <Text className='disclaimer pagePadding baseMarginTop' content={disclaimerText} />
             <Form origin='update' updateData={updateData} clearUpdateData={clearUpdateData} countries={countries} setLoading={setLoading} submitPlaceholder={submitPlaceholder} resetPlaceholder={resetPlaceholder} errorMessage={errorMessage}/>
-            <Table origin='update' className='largeMarginTop' countries={countries} users={users} updateSelected={updateData.id} setUpdateData={setUpdateData} clearUpdateData={clearUpdateData} isLoading={isLoading}/>
+            {!isLoading
+                ? <Table origin='update' className='largeMarginTop' countries={countries} users={users} updateSelected={updateData.id} setUpdateData={setUpdateData} clearUpdateData={clearUpdateData} isLoading={isLoading}/>
+                : <Table origin='update' className='largeMarginTop' countries={countries} users={users} updateSelected={updateData.id} setUpdateData={setUpdateData} clearUpdateData={clearUpdateData} isLoading={isLoading}/>
+            }
         </div>
     )
 }

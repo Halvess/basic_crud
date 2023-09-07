@@ -63,7 +63,10 @@ const Delete  = () => {
             {showModal ? <Modal show={showModal} children={modalTable} message={modalMessage} confirmFn={() => {deleteItems()}} closeModal={()=>{setModal(false)}}/> : null}
             <Header text='Delete' />
             <Text content={disclaimerText} className='disclaimer baseMarginTop pagePadding'/>
-            <Table origin='delete' className='baseMarginTop' countries={countries} users={users} deleteData={deleteData} setDeleteData={setDeleteData} isLoading={isLoading}/>
+            {!isLoading 
+                ? <Table origin='delete' className='baseMarginTop' countries={countries} users={users} deleteData={deleteData} setDeleteData={setDeleteData} isLoading={isLoading}/>
+                : <Table origin='delete' className='baseMarginTop' countries={countries} users={users} deleteData={deleteData} setDeleteData={setDeleteData} isLoading={isLoading}/>
+            }
             <div className='formRow largeMarginTop'>
                     <Button disabled={deleteData.length == 0 ? true : false} id='submit' className='btnDelete' placeholder={submitPlaceholder} type='submit' clickHandler={submitHandler}/>
                     <Button disabled={deleteData.length == 0 ? true : false} id='reset' className='btnDelete' placeholder={resetPlaceholder} type='reset' clickHandler={resetHandler}/>
