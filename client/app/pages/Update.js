@@ -15,8 +15,6 @@ const Update = () => {
         return setUpdateData(prevState => {return {...updateInitialState}})
     }
 
-    useEffect(() => {console.log(updateData)}, [updateData])
-
     const submitPlaceholder = 'Update user'
     const resetPlaceholder = 'Reset'
     const disclaimerText = `Click on a row at the table and then edit the user data in the form, then click on ${submitPlaceholder} to update its value. Click on ${resetPlaceholder} to clear all changes`
@@ -28,7 +26,7 @@ const Update = () => {
             <Header text='Update' />
             <Text className='disclaimer pagePadding baseMarginTop' content={disclaimerText} />
             <Form origin='update' updateData={updateData} clearUpdateData={clearUpdateData} countries={countries} setLoading={setLoading} submitPlaceholder={submitPlaceholder} resetPlaceholder={resetPlaceholder} errorMessage={errorMessage}/>
-            {!isLoading ? <Table origin='update' className='largeMarginTop' countries={countries} users={users} updateSelected={updateData.id} setUpdateData={setUpdateData} clearUpdateData={clearUpdateData}/> : <></>}
+            <Table origin='update' className='largeMarginTop' countries={countries} users={users} updateSelected={updateData.id} setUpdateData={setUpdateData} clearUpdateData={clearUpdateData} isLoading={isLoading}/>
         </div>
     )
 }

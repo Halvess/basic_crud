@@ -1,8 +1,9 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
 import './Table.css'
 import Button from '../Button/Button'
+import Text from '../Text/Text'
 
-const Table = ({origin='', className, countries=[], users=[], deleteData=[], updateSelected, setDeleteData, setUpdateData, clearUpdateData, elementsPerPage=10} ) => {
+const Table = ({origin='', className, countries=[], users=[], deleteData=[], updateSelected, setDeleteData, setUpdateData, clearUpdateData, elementsPerPage=10, isLoading} ) => {
     const [tableSort, setTableSort] = useState({sortBy: '', sortType: ''})
 
     const [pageTransition, setPageTransition] = useState(false)
@@ -168,9 +169,9 @@ const Table = ({origin='', className, countries=[], users=[], deleteData=[], upd
                         onMouseOver={handleTableMouseOver}
                         onMouseOut={handleTableMouseOut}
                         key={`row-${index}-page-${page+1}`}>
-                            <td>{user.name}</td>
-                            <td>{user.age}</td>
-                            <td>{user.country}</td>
+                            <td>{!isLoading? user.name: <p className='tableLoading'></p>}</td>
+                            <td>{!isLoading? user.age: <p className='tableLoading'></p>}</td>
+                            <td>{!isLoading? user.country: <p className='tableLoading'></p>}</td>
                     </tr>
         })
     }
@@ -207,7 +208,7 @@ const Table = ({origin='', className, countries=[], users=[], deleteData=[], upd
     {users.length > elementsPerPage ?
         <div className='pageSelector pagePadding baseMarginTop'>
             <Button className={page == 0 ? 'btnPage hidden' : 'btnPage'}  clickHandler={previousPage} placeholder='previous' />
-                <p> {`page ${page+1}`} </p>
+                <Text content={`page ${page+1}`} /> 
             <Button className={page+1 >= maxPages ? 'btnPage hidden' : 'btnPage'} clickHandler={nextPage} placeholder='next' />
         </div> : ''
     }        

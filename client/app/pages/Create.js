@@ -18,7 +18,7 @@ const Create = () => {
             <Header text='Create' />
             <Text className='disclaimer pagePadding baseMarginTop' content={disclaimerText} />
             <Form origin='create' countries={countries} submitPlaceholder={submitPlaceholder} resetPlaceholder={resetPlaceholder} setLoading={setLoading} errorMessage={errorMessage}/>
-            {!isLoading ? <Table origin='create' className='largeMarginTop' countries={countries} users={users}/> : <></>}
+            <Table origin='create' className='largeMarginTop' countries={countries} users={users} isLoading={isLoading}/>
         </div>
     )
 }
