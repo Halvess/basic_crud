@@ -25,7 +25,7 @@ const Menu = () => {
 
 
     const clickHandler = (e) => {
-        setTimeout(() => {e.target.className += ' menuClicked'}, 10)
+        setTimeout(() => {e.target.className = 'btnMenu menuClicked'}, 10)
         href = e.target.id
         let clickedElement = e.target
         let clickedElementPosition = clickedElement.getBoundingClientRect();

@@ -34,6 +34,7 @@ const router = createBrowserRouter([
 ])
 
 const App = () => {
+    useEffect(() => {console.log(window.navigator.language), []})
 
     const [countries, setCountries] = useState([])
     const [users, setUsers] = useState([])
