@@ -8,3 +8,14 @@
     font-size: .75rem;
     font-weight: 300;
 }
+
+.textCenter{
+    text-align: center;
+    white-space: pre-line;
+}
+
+.errorTitle{
+    color: var(--orange-web);
+    text-transform: uppercase;
+    font-size: 1.5rem;
+}

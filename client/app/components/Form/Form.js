@@ -1,15 +1,18 @@
 import './Form.css'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import Context from '../Context'
 import SelectCountries from '../SelectCountries/SelectCountries'
 import Button from '../Button/Button'
 import Text from '../Text/Text'
 import api from '../../api/api'
 import { iterateObjToArray, capitalizeName } from '../../utility/utility'
+import translations from '../../constants/translations.json'
 
-const Form = ({origin, countries, setLoading, submitPlaceholder = 'Submit', resetPlaceholder = 'Clear', setSearching, setSearchData, updateData, errorMessage, clearUpdateData}) => {
+const Form = ({origin, submitPlaceholder = 'Submit', resetPlaceholder = 'Clear', setSearching, setSearchData, updateData, errorMessage, clearUpdateData}) => {
     const initialState = {id: -1, name: '', age: 0, numcode: -1}
     const [formData, setFormData] = useState(initialState)
     const [hasError, setHasError] = useState(false)
+    const {getUsers, setLoading, language} = useContext(Context)
 
     useEffect(() => {
         if (origin == 'update'){
@@ -72,13 +75,14 @@ const Form = ({origin, countries, setLoading, submitPlaceholder = 'Submit', rese
 
 
     const addUser = async () => {
+        setLoading(true)
         let capName = capitalizeName(formData.name)
         await api.put('/users', {...formData, name: capName})
         .then(response => {if (response.status == 200){
-            setLoading(true)
+            getUsers()
         }
         else{
-            throw new Error(response.data[0])
+            throw new Error(response.status)
         }})
         .catch(err => {console.log(err)})
     }
@@ -87,11 +91,12 @@ const Form = ({origin, countries, setLoading, submitPlaceholder = 'Submit', rese
         if (sameUpdateData()){
             return null
         }
+        setLoading(true)
         let capName = capitalizeName(formData.name)
         await api.patch('/users', {id: updateData.id, ...formData, name: capName})
         .then(response => {if (response.status == 200){
             clearUpdateData()
-            setLoading(true)
+            getUsers()
         }
         else{
             throw new Error(response.data[0])
@@ -103,7 +108,7 @@ const Form = ({origin, countries, setLoading, submitPlaceholder = 'Submit', rese
         let {name, age, numcode} = formData
         let query = '?'
         if (name !== ''){
-            let capName = capitalizeName()
+            let capName = capitalizeName(name)
             query += `name=${capName}`
         }
         if (age > 0){
@@ -171,29 +176,30 @@ const Form = ({origin, countries, setLoading, submitPlaceholder = 'Submit', rese
                 return setFormData(prevState => {return {...prevState, numcode: value}});
             default: return null;
     }
+
 }
 
-    useEffect(() => {console.log('same data ' ,sameUpdateData(), '\ndisabled ', isDisabled(), '\nboth', isDisabled() && sameUpdateData(), '\nupdateData ', updateData), []})
+    const {name: labelName, age: labelAge, country: labelCountry} = translations[language]['labels']
 
     return (
         <form className='baseMarginTop pagePadding'>
             <div className='nameDiv'>
-                <label htmlFor='name' name='name'>Name</label>
+                <label htmlFor='name' name='name'>{labelName}</label>
                 <input className={hasError && nameError ? 'inputError' : null} onChange={e => {changeFormData('text', e.target.value)}} id='name' type='text' value={formData.name} disabled={isDisabled()}/>                
             </div>
             <div className='formRow'>
                 <div className='ageDiv'>
-                    <label htmlFor='age' name='age'>Age</label>
+                    <label htmlFor='age' name='age'>{labelAge}</label>
                     <input className={hasError && ageError ? 'inputError' : null} onChange={e => {changeFormData('number', e.target.value)}} id='age' type='number' disabled={isDisabled()} value={formData.age == 0 || formData.age == NaN ? '' : formData.age}/>
                 </div>
                 <div className='countryDiv'>
-                    <label htmlFor='country' name='country'>Country</label>
-                    <SelectCountries hasError={hasError && numcodeError} id='country' countries={countries} disabled={isDisabled()} value={formData.numcode} changeFormData={changeFormData}/>
+                    <label htmlFor='country' name='country'>{labelCountry}</label>
+                    <SelectCountries hasError={hasError && numcodeError} id='country' disabled={isDisabled()} value={formData.numcode} changeFormData={changeFormData}/>
                 </div>
             </div>
             {hasError ? <Text content={errorMessage} className='error padgePadding' /> : null}
             <div className='formRow baseMarginTop'>
-                    <Button id='reset' disabled={isDisabled() || sameUpdateData()} className='btnReset' placeholder={resetPlaceholder} type='reset' isMenu={false} clickHandler={resetHandler}/>
+                    <Button id='reset' disabled={isDisabled()} className='btnReset' placeholder={resetPlaceholder} type='reset' isMenu={false} clickHandler={resetHandler}/>
                     <Button id='submit' disabled={isDisabled() || sameUpdateData()} className='btnSubmit' placeholder={submitPlaceholder} type='submit' isMenu={false} clickHandler={submitHandler}/>
             </div>
         </form>

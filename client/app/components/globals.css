@@ -186,3 +186,30 @@
 .hidden{
   visibility: hidden;
 }
+
+.loaderWrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  vertical-align: middle;
+  width: .75rem;
+  height: .75rem;
+  border: .1rem solid black;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  }
+
+  @keyframes rotation {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+  } 

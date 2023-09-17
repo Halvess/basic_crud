@@ -90,7 +90,7 @@ th:nth-child(even) div{
 }
 
 .emptyRow{
-    visibility: hidden;
+    color: rgba(0,0,0,0);
 }
 
 .rowSelected{

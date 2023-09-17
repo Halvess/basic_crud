@@ -9,33 +9,39 @@ import Read from '../pages/Read'
 import Update from '../pages/Update'
 import Delete from '../pages/Delete'
 import DataContext from './Context';
+import ErrorPage from '../pages/Error';
 
 import './globals.css'
 const router = createBrowserRouter([
 {
     path: "/",
-    element: <Menu />
+    element: <Menu />,
+    errorElement: <ErrorPage /> 
 },
 {
     path: "create",
-    element: <Create/>
+    element: <Create/>,
+    errorElement: <ErrorPage />
 },
 {
     path: "read",
-    element: <Read/>
+    element: <Read/>,
+    errorElement: <ErrorPage />
 },    {
     path: "update",
-    element: <Update/>
+    element: <Update/>,
+    errorElement: <ErrorPage />
 },    
 {
     path: "delete",
-    element: <Delete/>
+    element: <Delete/>,
+    errorElement: <ErrorPage />
 }
 ])
 
 const App = () => {
-    useEffect(() => {console.log(window.navigator.language), []})
-
+    const initialLang = window.navigator.language !== 'pt-BR' ? 'en-US' : 'pt-BR'
+    const [language, setLanguage] = useState(initialLang)
     const [countries, setCountries] = useState([])
     const [users, setUsers] = useState([])
     const [isLoading, setLoading] = useState(true)
@@ -82,15 +88,9 @@ const App = () => {
         getUsers()
     }, [])
 
-    useEffect(() => {
-        if (isLoading){
-            getUsers()
-        }
-    }, [isLoading])
-
     return (
         <React.StrictMode>  
-            <DataContext.Provider value={{countries, users, isLoading, setLoading}}>
+            <DataContext.Provider value={{countries, users, isLoading, language, setLanguage, setLoading, getUsers}}>
                 <RouterProvider router={router} />        
             </DataContext.Provider>
         </React.StrictMode>

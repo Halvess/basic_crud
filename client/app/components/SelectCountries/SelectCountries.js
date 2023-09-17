@@ -1,7 +1,9 @@
 import Select from 'react-select'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import Context from '../Context'
 
-const SelectCountries = ({id, countries, changeFormData, value, disabled, hasError}) => {
+const SelectCountries = ({id, changeFormData, value, disabled, hasError}) => {
+    const {countries} = useContext(Context)
     const options = []
     countries.forEach(country => {
         options.push({
