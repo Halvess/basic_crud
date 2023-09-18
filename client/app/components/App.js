@@ -2,6 +2,7 @@ import React from 'react';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import api from '../api/api'
+import translations from '../constants/translations.json'
 
 import Menu from '../pages/Menu'
 import Create from '../pages/Create'
@@ -16,27 +17,31 @@ const router = createBrowserRouter([
 {
     path: "/",
     element: <Menu />,
+    loader: async () => {
+        const userRes = await api.get('/users');
+        const countriesRes = await api.get('/country');
+        if (userRes.status !== 200 || countriesRes.status !== 200){
+            throw new Response('', {status: 500})
+        }
+    return null
+    },
     errorElement: <ErrorPage /> 
 },
 {
     path: "create",
-    element: <Create/>,
-    errorElement: <ErrorPage />
+    element: <Create/>
 },
 {
     path: "read",
-    element: <Read/>,
-    errorElement: <ErrorPage />
+    element: <Read/>
 },    {
     path: "update",
-    element: <Update/>,
-    errorElement: <ErrorPage />
+    element: <Update/>
 },    
 {
     path: "delete",
-    element: <Delete/>,
-    errorElement: <ErrorPage />
-}
+    element: <Delete/>
+},
 ])
 
 const App = () => {
@@ -45,6 +50,8 @@ const App = () => {
     const [countries, setCountries] = useState([])
     const [users, setUsers] = useState([])
     const [isLoading, setLoading] = useState(true)
+    const {apiError} = translations[language]
+
     const getUsers = async () => {
         await api.get('/users')
             .then(res => {
@@ -60,14 +67,27 @@ const App = () => {
                     }
                     setUsers(prevState => {return [...userArr]})
                     setLoading(false)  
-                }})
+                }
+            else{
+                throw new Error(res.data)
+            }})
+            .catch(err => {
+                console.log(err)
+                throw new Response('lala', {status:500})
+                alert(apiError)
+            })
          }
     
     const getCountries = async () => {
         await api.get('/country')
-        .then(res => {if (res.status == 200){
-            return res.data
-        }})
+        .then(res => {
+            if (res.status == 200){
+                return res.data
+            }
+            else{
+                throw new Error(res.data)
+            }
+        })
         .then(data => {
             let countriesArr = []
             for (let index in data){
@@ -78,6 +98,10 @@ const App = () => {
                 })
             }
             setCountries([...countriesArr])
+        })
+        .catch(err => {
+            console.log(err)
+            //alert(apiError)
         })
     }
 

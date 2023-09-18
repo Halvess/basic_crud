@@ -13,6 +13,7 @@ const Form = ({origin, submitPlaceholder = 'Submit', resetPlaceholder = 'Clear',
     const [formData, setFormData] = useState(initialState)
     const [hasError, setHasError] = useState(false)
     const {getUsers, setLoading, language} = useContext(Context)
+    const {apiError} = translations[language]
 
     useEffect(() => {
         if (origin == 'update'){
@@ -82,9 +83,9 @@ const Form = ({origin, submitPlaceholder = 'Submit', resetPlaceholder = 'Clear',
             getUsers()
         }
         else{
-            throw new Error(response.status)
+            throw new Error(response.data)
         }})
-        .catch(err => {console.log(err)})
+        .catch(err => {console.log(err); alert(apiError)})
     }
 
     const updateUser = async () => {
@@ -99,9 +100,9 @@ const Form = ({origin, submitPlaceholder = 'Submit', resetPlaceholder = 'Clear',
             getUsers()
         }
         else{
-            throw new Error(response.data[0])
+            throw new Error(response.data)
         }})
-        .catch(err => {console.log(err)})
+        .catch(err => {console.log(err); alert(apiError)})
     }
 
     const findUser = async () => {
@@ -131,9 +132,9 @@ const Form = ({origin, submitPlaceholder = 'Submit', resetPlaceholder = 'Clear',
                 setSearching(false)
         }
         else{
-            throw new Error(response.data[0])
+            throw new Error(response.data)
         }})
-        .catch(err => {console.log(err)})
+        .catch(err => {console.log(err); alert(apiError)})
 
     }
 

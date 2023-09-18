@@ -8,22 +8,29 @@ import translations from '../constants/translations.json'
 export default function ErrorPage() {
   const navigate = useNavigate();
   const error = useRouteError();
+  console.log("Error is: ", error)
   const {language} = useContext(Context);
   const {pageTitle, pageMessage, codeTitle, messageTitle, [404]: notFound, [500]: serverError} = translations[language]['errorPage']
-  let errorCode = error.status 
+  let errorCode = 0
   let errorMessage = ''
+
   if (isRouteErrorResponse(error)){
-      if (errorCode == 404){
-        errorMessage = notFound
-      }
-      if (errorCode == 500){
-        errorMsg = serverError
-      }
+    errorCode = error.status
+    if (errorCode == 404){
+      errorMessage = notFound
+    }
   }
   else{
-    errorCode = '000'
-    errorMessage = error.message || error.statusText
+    errorCode = error.response.status
+    if (errorCode == 500){
+      errorMessage = serverError
+    }
+    else{
+      errorCode = '000'
+      errorMessage = error.message || error.statusText
+    }
   }
+
 
     const modalMessage = "Something went wrong, here's some details on what happened"
     const modalChildren = <div className='modalErrorWrapper pagePadding baseMarginTop largeMarginBottom'>

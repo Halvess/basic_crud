@@ -37,7 +37,8 @@
             "404": "Page not found. \nCheck the browser URL for typing errors.",
             "500": "Internal server error.\nTry again later."
         },
-        "cronMessage": "All data will be reset daily"
+        "cronMessage": "All data will be reset daily",
+        "apiError": "There was a problem conecting to the database, please try again later."
     },
     "pt-BR": {
         "labels": {
@@ -77,6 +78,7 @@
             "404": "Página não encontrada.\nConfira a URL do navegador para possíveis erros de digitação.",
             "500": "Erro interno do servidor.\nTente novamente mais tarde."
         },
-        "cronMessage": "Todos os dados serão resetados diariamente."
+        "cronMessage": "Todos os dados serão resetados diariamente.",
+        "apiError": "Houve um problema ao conectar com a base de dados. Tente novamente mais tarde."
     }
 }
