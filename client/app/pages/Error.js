@@ -9,7 +9,7 @@ export default function ErrorPage() {
   const navigate = useNavigate();
   const error = useRouteError();
   const {language} = useContext(Context);
-  const {codeTitle, messageTitle, [404]: notFound, [500]: serverError} = translations[language]['errorPage']
+  const {pageTitle, pageMessage, codeTitle, messageTitle, [404]: notFound, [500]: serverError} = translations[language]['errorPage']
   let errorCode = error.status 
   let errorMessage = ''
   if (isRouteErrorResponse(error)){
@@ -38,6 +38,6 @@ export default function ErrorPage() {
                           </div>
 
   return (
-        <Modal origin='error' show={true} children={modalChildren} message={modalMessage}/>
+        <Modal origin='error' title={pageTitle} show={true} children={modalChildren} message={pageMessage}/>
   );
 }

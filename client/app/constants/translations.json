@@ -30,9 +30,11 @@
             "errorMessage": ""
         },
         "errorPage" : {
+            "pageTitle": "Error",
+            "pageMessage": "Something went wrong, here's some details on what happened",
             "codeTitle": "Code",
             "messageTitle": "Message",
-            "404": "Page not found.\nCheck the browser URL for typing errors.",
+            "404": "Page not found. \nCheck the browser URL for typing errors.",
             "500": "Internal server error.\nTry again later."
         },
         "cronMessage": "All data will be reset daily"
@@ -68,10 +70,12 @@
             "errorMessage": ""
         },
         "errorPage" : {
+            "pageTitle": "Erro",
+            "pageMessage": "Algo deu errado. Aqui está uma breve descrição do ocorrido.",
             "codeTitle": "Código",
             "messageTitle": "Mensagem",
-            "404": "Página não encontrada.{'\n'}Confira a URL do navegador para possíveis erros de digitação.",
-            "500": "Erro interno do servidor.{'\n'}Tente novamente mais tarde."
+            "404": "Página não encontrada.\nConfira a URL do navegador para possíveis erros de digitação.",
+            "500": "Erro interno do servidor.\nTente novamente mais tarde."
         },
         "cronMessage": "Todos os dados serão resetados diariamente."
     }

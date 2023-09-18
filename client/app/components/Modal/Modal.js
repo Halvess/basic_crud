@@ -5,7 +5,7 @@ import Header from '../Header/Header'
 import Button from '../Button/Button'
 import Text from '../Text/Text'
 
-const Modal = ({origin, show, children, message, deleteData, confirmFn, closeModal}) => {
+const Modal = ({origin, title='Warning', show, children, message, deleteData, confirmFn, closeModal}) => {
     const sectionRef = useRef()
     const clickHandler = e => {
         e.preventDefault()
@@ -14,16 +14,6 @@ const Modal = ({origin, show, children, message, deleteData, confirmFn, closeMod
             confirmFn()
         }
             return sectionRef.current.style.opacity = '0'
-    }
-
-    const headerMessage = () => {
-        if (origin == 'delete'){
-            return 'Confirm Deletion'
-        }
-        if (origin == 'error'){
-            return 'Error'
-        }
-        return 'Warning'
     }
 
     const modalID = () => {
@@ -38,7 +28,7 @@ const Modal = ({origin, show, children, message, deleteData, confirmFn, closeMod
             <section id='modal-background' ref={sectionRef} onTransitionEnd={(e) => {e.target.id == 'modal-background' ? closeModal() : null}}>
                     <div id={modalID()}>
                         <div>
-                            <Header text={headerMessage()} inModal={true}/>
+                            <Header text={title} inModal={true}/>
                                 <Text content={message} className={origin !== 'error' ? 'pagePadding baseMarginTop' : 'pagePadding baseMarginTop textCenter'}/>
                                 {children}
                         </div>

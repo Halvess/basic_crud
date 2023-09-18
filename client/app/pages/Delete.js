@@ -59,7 +59,7 @@ const Delete  = () => {
 
     return (
         <div className='menuDelete load'>
-            {showModal ? <Modal origin='delete' show={showModal} children={modalTable} message={modalMessage} confirmFn={() => {deleteItems()}} closeModal={()=>{setModal(false)}}/> : null}
+            {showModal ? <Modal origin='delete' title={'Confirm Deletion'} show={showModal} children={modalTable} message={modalMessage} confirmFn={() => {deleteItems()}} closeModal={()=>{setModal(false)}}/> : null}
             <Header text='Delete' />
             <Text content={disclaimerText} className='disclaimer baseMarginTop pagePadding'/>
             <Table origin='delete' className='baseMarginTop' deleteData={deleteData} setDeleteData={setDeleteData}/>
