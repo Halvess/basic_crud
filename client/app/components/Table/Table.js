@@ -1,9 +1,12 @@
-import { useState, useMemo, useEffect, useRef } from 'react'
+import { useState, useMemo, useEffect, useRef, useContext } from 'react'
+import Context from '../Context'
 import './Table.css'
 import Button from '../Button/Button'
 import Text from '../Text/Text'
+import translations from '../../constants/translations.json'
 
-const Table = ({origin='', className, countries=[], users=[], deleteData=[], updateSelected, setDeleteData, setUpdateData, clearUpdateData, elementsPerPage=10, isLoading} ) => {
+const Table = ({origin='', className, data, deleteData=[], updateSelected, setDeleteData, setUpdateData, clearUpdateData, elementsPerPage=10} ) => {
+    const {users, countries, isLoading, language} = useContext(Context)
     const [tableSort, setTableSort] = useState({sortBy: '', sortType: ''})
 
     const [pageTransition, setPageTransition] = useState(false)
@@ -108,18 +111,19 @@ const Table = ({origin='', className, countries=[], users=[], deleteData=[], upd
     }
 
     let dataPerPage = useMemo(() => {
-        if (users.length == 0 || countries.length == 0){
+        if (users.length == 0 || countries.length == 0 || isLoading){
             let emptyPage = [];
             for (let i=0;i<elementsPerPage;i++){
                 emptyPage.push(null)
             }
-            return [['noUser', ...emptyPage]]
+            return [[...emptyPage]]
         }
         let pageArr = []
         for (let i=0; i<maxPages; i++){
             let startIndex = i * elementsPerPage
             let endIndex = startIndex + elementsPerPage
-            let userData = users.slice(startIndex, endIndex)
+            let dataArr = data ? data : users
+            let userData = dataArr.slice(startIndex, endIndex)
             .map(user => {
                 return {
                     ...user,
@@ -136,7 +140,7 @@ const Table = ({origin='', className, countries=[], users=[], deleteData=[], upd
             pageArr.push(userData)
         }
         return pageArr
-    }, [users])
+    }, [users, data])
 
     let tableData = []
 
@@ -154,8 +158,15 @@ const Table = ({origin='', className, countries=[], users=[], deleteData=[], upd
             pageData.sort(sortCompareFn)
         }
         tableData = pageData.map((user, index) => {
-            if (user === 'noUser'){
-                return  <tr key={'userLess'}><td className='userLess'>No users found on the database.</td></tr>
+            if (isLoading){
+                return  <tr className='emptyRow' key={`loading-${index}`}>
+                            <td><p className='tableLoading'>null</p></td>
+                            <td><p className='tableLoading'>null</p></td>
+                            <td><p className='tableLoading'>null</p></td>
+                        </tr>
+            }
+            if (user === null && index == 0){
+                return  <tr key={'userLess'}><td className='userLess'>No users found in the database.</td></tr>
             }
             if (user === null){
                 return      <tr className='emptyRow' key={`emptyRow-${index}-page-${page+1}`}>
@@ -169,9 +180,9 @@ const Table = ({origin='', className, countries=[], users=[], deleteData=[], upd
                         onMouseOver={handleTableMouseOver}
                         onMouseOut={handleTableMouseOut}
                         key={`row-${index}-page-${page+1}`}>
-                            <td>{!isLoading? user.name: <p className='tableLoading'></p>}</td>
-                            <td>{!isLoading? user.age: <p className='tableLoading'></p>}</td>
-                            <td>{!isLoading? user.country: <p className='tableLoading'></p>}</td>
+                            <td>{user.name}</td>
+                            <td>{user.age}</td>
+                            <td>{user.country}</td>
                     </tr>
         })
     }
@@ -191,21 +202,30 @@ const Table = ({origin='', className, countries=[], users=[], deleteData=[], upd
     let {sortBy, sortType} = tableSort
     let sortArrow = <span className={`sort-${sortType}`}></span>
 
+    const needPages = () => {
+        if (data){
+            return data.length > elementsPerPage
+        }
+        return users.length > elementsPerPage
+    }
+
+    const {name: labelName, age: labelAge, country: labelCountry} = translations[language]['labels']
+
     return (
         <>
         <table className={'pagePadding ' + className}>
             <thead>
                 <tr>
-                    <th onClick={() => {sortHandler('name')}} className='tableName'><div><span>name</span>{sortBy == 'name' && sortType !== '' ? sortArrow : ''}</div></th>
-                    <th onClick={() => {sortHandler('age')}} className='tableAge'><div><span>age</span>{sortBy == 'age' && sortType !== '' ? sortArrow : ''}</div></th>
-                    <th onClick={() => {sortHandler('country')}} className='tableCountry'><div><span>country</span>{sortBy == 'country' && sortType !== '' ? sortArrow : ''}</div></th>
+                    <th onClick={() => {sortHandler('name')}} className='tableName'><div><span>{labelName}</span>{sortBy == 'name' && sortType !== '' ? sortArrow : ''}</div></th>
+                    <th onClick={() => {sortHandler('age')}} className='tableAge'><div><span>{labelAge}</span>{sortBy == 'age' && sortType !== '' ? sortArrow : ''}</div></th>
+                    <th onClick={() => {sortHandler('country')}} className='tableCountry'><div><span>{labelCountry}</span>{sortBy == 'country' && sortType !== '' ? sortArrow : ''}</div></th>
                 </tr>
             </thead>
             <tbody className={pageTransition ? 'pageTransition' : null} onTransitionEnd={() => {setPageTransition(false)}}>
-                {tableData}
+                 {tableData}
             </tbody>
         </table>
-    {users.length > elementsPerPage ?
+    {needPages() ?
         <div className='pageSelector pagePadding baseMarginTop'>
             <Button className={page == 0 ? 'btnPage hidden' : 'btnPage'}  clickHandler={previousPage} placeholder='previous' />
                 <Text content={`page ${page+1}`} /> 
@@ -216,6 +236,5 @@ const Table = ({origin='', className, countries=[], users=[], deleteData=[], upd
     )
 
 }
-
 export default Table
 

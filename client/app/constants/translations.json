@@ -1,0 +1,84 @@
+{
+    "en-US": {
+        "labels": {
+            "name": "Name",
+            "age": "Age",
+            "country": "Country"
+        },
+        "create": {
+            "submitPlaceholder": "Add user",
+            "resetPlaceholder": "Clear",
+            "disclaimerText": "Fill all fields and click Add user to add a new user. Click Clear in order to clear all fields.",
+            "errorMessage": "Please fill all fields."
+        },
+        "read": {
+            "submitPlaceholder": "Find users",
+            "resetPlaceholder": "Clear",
+            "disclaimerText": "Fill one or more fields and click Find users to search for a registered user. Click Clear in order to clear all fields.",
+            "errorMessage": "Please fill at least one field."
+        },
+        "update": {
+            "submitPlaceholder": "Update user",
+            "resetPlaceholder": "Cancel",
+            "disclaimerText": "Click on a row of the table. The selected row will be highlighted and it's information will be transported to the form. Change the desired data and click Update user in order to update the values. Click Cancel to remove your selection",
+            "errorMessage": ""
+        },
+        "delete": {
+            "submitPlaceholder": "Delete users",
+            "resetPlaceholder": "Cancel",
+            "disclaimerText": "Click on the rows you wish to delete to select them, then click Delete users. A confirmation window will appear, check the data and then confirm in order to delete. Click Cancel to clear the selection.",
+            "errorMessage": ""
+        },
+        "errorPage" : {
+            "pageTitle": "Error",
+            "pageMessage": "Something went wrong, here's some details on what happened",
+            "codeTitle": "Code",
+            "messageTitle": "Message",
+            "404": "Page not found. \nCheck the browser URL for typing errors.",
+            "500": "Internal server error.\nTry again later."
+        },
+        "cronMessage": "All data will be reset daily",
+        "apiError": "There was a problem conecting to the database, please try again later."
+    },
+    "pt-BR": {
+        "labels": {
+            "name": "Nome",
+            "age": "Idade",
+            "country": "País"
+        },
+        "create": {
+            "submitPlaceholder": "Adicionar usuário",
+            "resetPlaceholder": "Limpar campos",
+            "disclaimerText": "Preencha todos os campos do formulário e clique em Adicionar usuário para adicioná-lo à base de dados. Clique em Limpar campos para remover as informações adicionadas do formulário",
+            "errorMessage": "Favor preencher todos os campos."
+        },
+        "read": {
+            "submitPlaceholder": "Procurar",
+            "resetPlaceholder": "Limpar campos",
+            "disclaimerText": "Preencha ao menos um campo do formulário e clique em Procurar para encontrar os valores desejados. Clique em Limpar campos para remover as informações adicionadas do formulário",
+            "errorMessage": "Preencha ao menos um campo"
+        },
+        "update": {
+            "submitPlaceholder": "Alterar usuário",
+            "resetPlaceholder": "Cancelar",
+            "disclaimerText": "Clique em uma linha da tabela, fazendo com que ela fique destacada e seus dados apareçam no formulário. Altere os dados desejados e clique em Alterar usuário para mudar as informações no banco de dados. Clique em Cancelar para remover a seleção.",
+            "errorMessage": ""
+        },
+        "delete": {
+            "submitPlaceholder": "Deletar usuários",
+            "resetPlaceholder": "Cancelar",
+            "disclaimerText": "Clique nas linhas da tabela que deseja deletar e clique em Deletar usuários, fazendo com que janela de confirmação apareça. Confira as linhas selecionadas e confirme para deletar os respectivos usuários. Clique em Cancelar para remover as seleções.",
+            "errorMessage": ""
+        },
+        "errorPage" : {
+            "pageTitle": "Erro",
+            "pageMessage": "Algo deu errado. Aqui está uma breve descrição do ocorrido.",
+            "codeTitle": "Código",
+            "messageTitle": "Mensagem",
+            "404": "Página não encontrada.\nConfira a URL do navegador para possíveis erros de digitação.",
+            "500": "Erro interno do servidor.\nTente novamente mais tarde."
+        },
+        "cronMessage": "Todos os dados serão resetados diariamente.",
+        "apiError": "Houve um problema ao conectar com a base de dados. Tente novamente mais tarde."
+    }
+}
