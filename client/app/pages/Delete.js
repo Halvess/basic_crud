@@ -8,11 +8,10 @@ import Button from '../components/Button/Button'
 import Modal from '../components/Modal/Modal'
 import api from '../api/api'
 import Text from '../components/Text/Text'
-import translations from '../constants/translations.json'
 
 
 const Delete  = () => {
-    const {users, getUsers, language, setLoading} = useContext(Context)
+    const {users, getUsers, language, translations, setLoading} = useContext(Context)
     const [deleteData, setDeleteData] = useState([])
     const [showModal, setModal] = useState(false)
 

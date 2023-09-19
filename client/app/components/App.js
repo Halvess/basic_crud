@@ -119,7 +119,7 @@ const App = () => {
 
     return (
         <React.StrictMode>  
-            <DataContext.Provider value={{countries, users, isLoading, language, setLanguage, setLoading, getUsers}}>
+            <DataContext.Provider value={{countries, users, isLoading, language, translations, setLanguage, setLoading, getUsers}}>
                 <RouterProvider router={router} />        
             </DataContext.Provider>
         </React.StrictMode>

@@ -3,13 +3,12 @@ import { useContext } from "react";
 import Context from '../components/Context'
 import Modal from "../components/Modal/Modal";
 import Text from "../components/Text/Text";
-import translations from '../constants/translations.json'
 
 export default function ErrorPage() {
   const navigate = useNavigate();
   const error = useRouteError();
   console.log("Error is: ", error)
-  const {language} = useContext(Context);
+  const {language, translations} = useContext(Context);
   const {pageTitle, pageMessage, codeTitle, messageTitle, [404]: notFound, [500]: serverError} = translations[language]['errorPage']
   let errorCode = 0
   let errorMessage = ''
