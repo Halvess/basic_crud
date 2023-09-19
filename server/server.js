@@ -38,7 +38,7 @@ server.use((req, res, next) => {
 
     next()
 })
-server.use('/api', apiRouter)
+server.use('/basic_crud/api', apiRouter)
 
 server.listen(PORT = process.env.PORT, () => {
     console.log('Server working on port', PORT)

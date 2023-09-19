@@ -29,20 +29,26 @@ const router = createBrowserRouter([
 },
 {
     path: "create",
-    element: <Create/>
+    element: <Create/>,
+    errorElement: <ErrorPage /> 
 },
 {
     path: "read",
-    element: <Read/>
+    element: <Read/>,
+    errorElement: <ErrorPage /> 
 },    {
     path: "update",
-    element: <Update/>
+    element: <Update/>,
+    errorElement: <ErrorPage /> 
 },    
 {
     path: "delete",
-    element: <Delete/>
+    element: <Delete/>,
+    errorElement: <ErrorPage /> 
 },
-])
+], {
+    basename: '/basic_crud/'
+})
 
 const App = () => {
     const initialLang = window.navigator.language !== 'pt-BR' ? 'en-US' : 'pt-BR'
@@ -73,7 +79,6 @@ const App = () => {
             }})
             .catch(err => {
                 console.log(err)
-                throw new Response('lala', {status:500})
                 alert(apiError)
             })
          }
@@ -101,7 +106,7 @@ const App = () => {
         })
         .catch(err => {
             console.log(err)
-            //alert(apiError)
+            alert(apiError)
         })
     }
 
@@ -114,7 +119,7 @@ const App = () => {
 
     return (
         <React.StrictMode>  
-            <DataContext.Provider value={{countries, users, isLoading, language, setLanguage, setLoading, getUsers}}>
+            <DataContext.Provider value={{countries, users, isLoading, language, translations, setLanguage, setLoading, getUsers}}>
                 <RouterProvider router={router} />        
             </DataContext.Provider>
         </React.StrictMode>

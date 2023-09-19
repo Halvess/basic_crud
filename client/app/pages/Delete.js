@@ -8,11 +8,10 @@ import Button from '../components/Button/Button'
 import Modal from '../components/Modal/Modal'
 import api from '../api/api'
 import Text from '../components/Text/Text'
-import translations from '../constants/translations.json'
 
 
 const Delete  = () => {
-    const {users, getUsers, language, setLoading} = useContext(Context)
+    const {users, getUsers, language, translations, setLoading} = useContext(Context)
     const [deleteData, setDeleteData] = useState([])
     const [showModal, setModal] = useState(false)
 
@@ -54,14 +53,16 @@ const Delete  = () => {
     const resetHandler = e => {
         setDeleteData([])
     }
-    
-    const {submitPlaceholder, resetPlaceholder, disclaimerText} = translations[language]['delete']
+
+    const {cronMessage} = translations[language]
+    const {submitPlaceholder, resetPlaceholder, disclaimerText, modalTitle, modalMessage} = translations[language]['delete']
 
     return (
         <div className='menuDelete load'>
-            {showModal ? <Modal origin='delete' title={'Confirm Deletion'} show={showModal} children={modalTable} message={modalMessage} confirmFn={() => {deleteItems()}} closeModal={()=>{setModal(false)}}/> : null}
+            {showModal ? <Modal origin='delete' title={modalTitle} show={showModal} children={modalTable} message={modalMessage} confirmFn={() => {deleteItems()}} closeModal={()=>{setModal(false)}}/> : null}
             <Header text='Delete' />
             <Text content={disclaimerText} className='disclaimer baseMarginTop pagePadding'/>
+            <Text content={cronMessage} className='disclaimer pagePadding smallMarginTop'/>
             <Table origin='delete' className='baseMarginTop' deleteData={deleteData} setDeleteData={setDeleteData}/>
             <div className='formRow largeMarginTop'>
                     <Button disabled={deleteData.length == 0 ? true : false} id='submit' className='btnDelete' placeholder={submitPlaceholder} type='submit' clickHandler={submitHandler}/>
