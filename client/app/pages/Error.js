@@ -31,8 +31,6 @@ export default function ErrorPage() {
     }
   }
 
-
-    const modalMessage = "Something went wrong, here's some details on what happened"
     const modalChildren = <div className='modalErrorWrapper pagePadding baseMarginTop largeMarginBottom'>
                             <div>
                                 <Text content={codeTitle} className="textCenter errorTitle"/>

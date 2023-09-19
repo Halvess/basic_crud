@@ -9,11 +9,13 @@ import Text from '../components/Text/Text'
 
 const Create = () => {
     const {language} = useContext(Context)
+    const {cronMessage} = translations[language]
     const {submitPlaceholder, resetPlaceholder, disclaimerText, errorMessage} = translations[language]['create']
     return (
         <div className='menuCreate load'>
             <Header text='Create' />
             <Text className='disclaimer pagePadding baseMarginTop' content={disclaimerText} />
+            <Text className='disclaimer pagePadding smallMarginTop ' content={cronMessage} />
             <Form origin='create' submitPlaceholder={submitPlaceholder} resetPlaceholder={resetPlaceholder} errorMessage={errorMessage}/>
             <Table origin='create' className='largeMarginTop'/>
         </div>

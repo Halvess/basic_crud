@@ -16,12 +16,14 @@ const Update = () => {
         return setUpdateData(prevState => {return {...updateInitialState}})
     }
 
+    const {cronMessage} = translations[language]
     const {submitPlaceholder, resetPlaceholder, disclaimerText} = translations[language]['update']
     
     return (
         <div className='menuUpdate load'>
             <Header text='Update' />
             <Text className='disclaimer pagePadding baseMarginTop' content={disclaimerText} />
+            <Text className='disclaimer pagePadding smallMarginTop' content={cronMessage} />
             <Form origin='update' updateData={updateData} clearUpdateData={clearUpdateData} submitPlaceholder={submitPlaceholder} resetPlaceholder={resetPlaceholder}/>
             <Table origin='update' className='largeMarginTop' updateSelected={updateData.id} setUpdateData={setUpdateData} clearUpdateData={clearUpdateData}/>
         </div>
