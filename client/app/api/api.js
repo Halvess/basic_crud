@@ -2,7 +2,7 @@ import axios from 'axios'
 
 
 const api = axios.create({
-    baseURL: `http://${window.location.hostname}/basic_crud/api`,
+    baseURL: `https://halvess.dev/basic_crud/api`,
     timeout: 5000
   });
 
